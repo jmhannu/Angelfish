@@ -13,26 +13,16 @@ namespace Angelfish
     public class Values
     {
         private int valuesCount;
-        private bool unassigned;
-        private bool measured; 
-        private List<double> fValues;
-        private List<double> kValues;
-        private List<double> dAValues;
-        private List<double> dBValues;
         private List<double> massProcentages;
-        private List<double> parts;
+        private List<double> connectedProcentages;
         private List<double> edgeConnectionProcentages;
         private List<double> solidEdgeProcentage;
         private List<string> types;
         private DataTree<double> varibles;
 
-        public int ValuesCount { get { return valuesCount; } set { valuesCount = CountVaribles(); } }
-        public List<double> FValues { get { return fValues; }  set { if(unassigned) fValues = value; } }
-        public List<double> KValues { get { return kValues; } set { if (unassigned) kValues = value; } }
-        public List<double> DAValues { get { return dAValues; } set { if (unassigned) dAValues = value; } }
-        public List<double> DBValues { get { return dBValues; } set { if (unassigned) dBValues = value; } }
+        public int ValuesCount { get { return valuesCount; } }
         public List<double> MassProcentages { get { return massProcentages; } }
-        public List<double> Parts { get { return parts; } }
+        public List<double> ConnectedProcentages { get { return connectedProcentages; } }
         public List<double> EdgeConnectionProcentages { get { return edgeConnectionProcentages; } }
         public List<double> SolidEdgeProcentage { get { return solidEdgeProcentage; } }
         public List<string> Types { get { return types; } }
@@ -41,13 +31,20 @@ namespace Angelfish
         public Values()
         {
             InitAll();
-            unassigned = true;
-            measured = false; 
         }
 
         public Values(string file)
         {
             InitAll();
+
+
+            List<double> fValues = new List<double>();
+            List<double> kValues = new List<double>();
+            List<double> dAValues = new List<double>();
+            List<double> dBValues = new List<double>();
+
+            double partMin = 100000;
+            double partMax = 0;
 
             string[] lines = file.Split('\n');
 
@@ -63,33 +60,36 @@ namespace Angelfish
                 massProcentages.Add(Convert.ToDouble(lineValues[4]));
                 edgeConnectionProcentages.Add(Convert.ToDouble(lineValues[5]));
                 types.Add(lineValues[6]);
-                parts.Add(Convert.ToDouble(lineValues[7]));
+                double partCount = Convert.ToDouble(lineValues[7]);
+                connectedProcentages.Add(partCount);
                 solidEdgeProcentage.Add(Convert.ToDouble(lineValues[9]));
 
+                if (partCount > partMax) partMax = partCount;
+                if (partCount < partMin) partMin = partCount;
+
                 valuesCount++;
-                unassigned = false;
-                measured = true; 
             }
 
-            PopulateVaribleTree();
+            for (int i = 0; i < connectedProcentages.Count; i++)
+            {
+                connectedProcentages[i] = ReMap(connectedProcentages[i], partMin, partMax, 0, 1);
+            }
+
+            PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
         }
 
         private void InitAll()
         {
             valuesCount = 0;
-            fValues = new List<double>();
-            kValues = new List<double>();
-            dAValues = new List<double>();
-            dBValues = new List<double>();
             massProcentages = new List<double>();
-            parts = new List<double>();
+            connectedProcentages = new List<double>();
             edgeConnectionProcentages = new List<double>();
             solidEdgeProcentage = new List<double>();
             types = new List<string>();
             varibles = new DataTree<double>();
         }
 
-        private void PopulateVaribleTree()
+        private void PopulateVaribleTree(List<double> dAValues, List<double> dBValues, List<double> fValues, List<double> kValues)
         {
 
             for (int i = 0; i < valuesCount; i++)
@@ -104,12 +104,38 @@ namespace Angelfish
             }
         }
 
-        private int CountVaribles()
+        private double ReMap(double value, double currentMin, double currentMax, double newMin, double newMax)
         {
-            int counter = 0;
+            double reMaped = newMin + (newMax - newMin) * ((value - currentMin) / (currentMax - currentMin));
 
-            return counter;
+            return reMaped;
         }
 
+        public int SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge)
+        {
+            Dictionary<int, double> dictonary = new Dictionary<int, double>();
+            //List<KeyValuePair<int, double>> weightedList = new List<KeyValuePair<int, double>>();
+
+            for (int i = 0; i < valuesCount; i++)
+            {
+                double weightedNr = (massProcentages[i] * weightMass) +
+                                     (connectedProcentages[i] * weightConnection) +
+                                     (edgeConnectionProcentages[i] * weightEdgeConnection) +
+                                     (solidEdgeProcentage[i] * weightSolidEdge);
+
+                dictonary.Add(i, weightedNr);
+            }
+
+            List<KeyValuePair<int, double>> weightedList = new List<KeyValuePair<int, double>>(dictonary);
+            weightedList.Sort(
+                delegate (KeyValuePair<int, double> firstPair,
+                KeyValuePair<int, double> nextPair)
+                {
+                    return firstPair.Value.CompareTo(nextPair.Value);
+                }
+            );
+
+            return weightedList[0].Key;
+        }
     }
 }
