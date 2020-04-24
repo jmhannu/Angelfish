@@ -56,9 +56,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Values2D.cs" />
+    <Compile Include="GhcValues2D.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Values.cs" />
     <Compile Include="AngelfishInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\inputs2D.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -70,6 +85,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
+Copy "$(TargetPath)" "C:\Users\JH\AppData\Roaming\Grasshopper\Libraries\RDtoGH.gha"
 Erase "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

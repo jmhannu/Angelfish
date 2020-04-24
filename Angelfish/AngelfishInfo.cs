@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Drawing;
 using Grasshopper.Kernel;
 
@@ -25,8 +26,7 @@ namespace Angelfish
         {
             get
             {
-                //Return a short string describing the purpose of this GHA library.
-                return "";
+                return "Create 2D or 3D RD patterning on geometry";
             }
         }
         public override Guid Id
@@ -41,16 +41,14 @@ namespace Angelfish
         {
             get
             {
-                //Return a string identifying you or your company.
-                return "";
+                return "Julia Hannu";
             }
         }
         public override string AuthorContact
         {
             get
             {
-                //Return a string representing your preferred contact details.
-                return "";
+                return "julia_hannu@hotmail.com";
             }
         }
     }
