@@ -14,7 +14,7 @@ namespace Angelfish
     {
         private int valuesCount;
         private List<double> massProcentages;
-        private List<double> connectedProcentages;
+        private List<double> connectivityRate;
         private List<double> edgeConnectionProcentages;
         private List<double> solidEdgeProcentage;
         private List<string> types;
@@ -22,7 +22,7 @@ namespace Angelfish
 
         public int ValuesCount { get { return valuesCount; } }
         public List<double> MassProcentages { get { return massProcentages; } }
-        public List<double> ConnectedProcentages { get { return connectedProcentages; } }
+        public List<double> ConnectedProcentages { get { return connectivityRate; } }
         public List<double> EdgeConnectionProcentages { get { return edgeConnectionProcentages; } }
         public List<double> SolidEdgeProcentage { get { return solidEdgeProcentage; } }
         public List<string> Types { get { return types; } }
@@ -61,7 +61,7 @@ namespace Angelfish
                 edgeConnectionProcentages.Add(Convert.ToDouble(lineValues[5]));
                 types.Add(lineValues[6]);
                 double partCount = Convert.ToDouble(lineValues[7]);
-                connectedProcentages.Add(partCount);
+                connectivityRate.Add(partCount);
                 solidEdgeProcentage.Add(Convert.ToDouble(lineValues[9]));
 
                 if (partCount > partMax) partMax = partCount;
@@ -70,9 +70,9 @@ namespace Angelfish
                 valuesCount++;
             }
 
-            for (int i = 0; i < connectedProcentages.Count; i++)
+            for (int i = 0; i < connectivityRate.Count; i++)
             {
-                connectedProcentages[i] = ReMap(connectedProcentages[i], partMin, partMax, 0, 1);
+                connectivityRate[i] = ReMap(connectivityRate[i], partMin, partMax, 0, 1);
             }
 
             PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
@@ -82,7 +82,7 @@ namespace Angelfish
         {
             valuesCount = 0;
             massProcentages = new List<double>();
-            connectedProcentages = new List<double>();
+            connectivityRate = new List<double>();
             edgeConnectionProcentages = new List<double>();
             solidEdgeProcentage = new List<double>();
             types = new List<string>();
@@ -111,15 +111,14 @@ namespace Angelfish
             return reMaped;
         }
 
-        public int SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge)
+        public List<int> SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge, double range)
         {
             Dictionary<int, double> dictonary = new Dictionary<int, double>();
-            //List<KeyValuePair<int, double>> weightedList = new List<KeyValuePair<int, double>>();
-
             for (int i = 0; i < valuesCount; i++)
             {
-                double weightedNr = (massProcentages[i] * weightMass) +
-                                     (connectedProcentages[i] * weightConnection) +
+                double remapMass = ReMap(massProcentages[i], 0, 1, 1, 0);
+                double weightedNr = (remapMass * weightMass) +
+                                     (connectivityRate[i] * weightConnection) +
                                      (edgeConnectionProcentages[i] * weightEdgeConnection) +
                                      (solidEdgeProcentage[i] * weightSolidEdge);
 
@@ -135,7 +134,26 @@ namespace Angelfish
                 }
             );
 
-            return weightedList[0].Key;
+            weightedList.Reverse();
+            List<int> allIndex = new List<int>();
+            double compareTo = weightedList[0].Value - range;
+            bool checking = true;
+            int j = 0;
+
+            while (checking)
+            {
+                if (weightedList[j].Value >= compareTo)
+                {
+                    allIndex.Add(weightedList[j].Key);
+                    j++;
+                }
+
+
+                else checking = false;
+
+            }
+
+            return allIndex;
         }
     }
 }
