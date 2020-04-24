@@ -19,7 +19,7 @@ namespace Angelfish
         private List<double> solidEdgeProcentage;
         private List<string> types;
         private DataTree<double> varibles;
-
+        public double WeightedValue; 
         public int ValuesCount { get { return valuesCount; } }
         public List<double> MassProcentages { get { return massProcentages; } }
         public List<double> ConnectedProcentages { get { return connectivityRate; } }
@@ -111,7 +111,7 @@ namespace Angelfish
             return reMaped;
         }
 
-        public List<int> SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge, double range)
+        public List<int> SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge, double addRange)
         {
             Dictionary<int, double> dictonary = new Dictionary<int, double>();
             for (int i = 0; i < valuesCount; i++)
@@ -136,7 +136,10 @@ namespace Angelfish
 
             weightedList.Reverse();
             List<int> allIndex = new List<int>();
-            double compareTo = weightedList[0].Value - range;
+
+            double compareTo = weightedList[0].Value - addRange;
+            WeightedValue = compareTo;
+
             bool checking = true;
             int j = 0;
 

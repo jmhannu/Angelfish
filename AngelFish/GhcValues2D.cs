@@ -36,6 +36,7 @@ namespace Angelfish
             pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
             pManager.AddNumberParameter("Edge connections", "Edge connect", "Percentages of parts with connetion to the edge", GH_ParamAccess.list);
             pManager.AddNumberParameter("Select Index", "Select i", "Heighest/lowest mass index", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Weighted Number", "Weighted", "Weighted Number", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -50,15 +51,16 @@ namespace Angelfish
 
             double weightMass, weightConnection, weightEdgeConnection, weightSolidEdge;
             weightMass = weightConnection = weightEdgeConnection = weightSolidEdge = 1.0;
-            double range = 0.0;
+            double addRange = 0.0;
 
             DA.GetData(0, ref weightMass);
             DA.GetData(1, ref weightConnection);
             DA.GetData(2, ref weightEdgeConnection);
             DA.GetData(3, ref weightSolidEdge);
-            DA.GetData(4, ref weightSolidEdge);
+            DA.GetData(4, ref addRange);
 
-            DA.SetDataList(6, values.SelectIndex(weightMass, weightConnection, weightEdgeConnection, weightSolidEdge, range));
+            DA.SetDataList(6, values.SelectIndex(weightMass, weightConnection, weightEdgeConnection, weightSolidEdge, addRange));
+            DA.SetData(7, values.WeightedValue);
         }
 
         protected override System.Drawing.Bitmap Icon
