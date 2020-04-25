@@ -56,12 +56,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GhcCalculateRD.cs" />
     <Compile Include="GhcValues2D.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ReactionDiffusion.cs" />
     <Compile Include="Values.cs" />
     <Compile Include="AngelfishInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
