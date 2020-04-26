@@ -23,6 +23,9 @@ namespace Angelfish
 
         Mesh mesh;
 
+        public List<Point3d> solid;
+        public List<Point3d> other;
+
         public ReactionDiffusion(GH_Structure<GH_Number> _values, Mesh _mesh)
         {
             values = _values;
@@ -170,15 +173,23 @@ namespace Angelfish
             }
         }
 
-        public void SetColours()
+        public void DividePoints()
         {
-
-
-            mesh.VertexColors.CreateMonotoneMesh(Color.White);
+            solid = new List<Point3d>();
+            other = new List<Point3d>();
+            
+            //mesh.VertexColors.CreateMonotoneMesh(Color.White);
 
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
-               // mesh.VertexColors(i) = Color.Purple;
+                // mesh.VertexColors(i) = Color.Purple;
+
+                if (a[i] < 0.4)
+                {
+                    solid.Add(mesh.Vertices[i]);
+                }
+
+                else other.Add(mesh.Vertices[i]);
             }
 
             

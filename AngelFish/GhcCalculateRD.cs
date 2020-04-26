@@ -50,9 +50,10 @@ namespace Angelfish
             }
 
             reactDiffuse.Update();
+            reactDiffuse.DividePoints();
 
-            DA.SetDataList(0, reactDiffuse.points);
-            DA.SetDataList(1, reactDiffuse.points);
+            DA.SetDataList(0, reactDiffuse.solid);
+            DA.SetDataList(1, reactDiffuse.other);
             DA.SetData(2, reactDiffuse.PrintOut());
             DA.SetDataTree(3, reactDiffuse.neighbours);
         }
