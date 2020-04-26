@@ -32,8 +32,8 @@ namespace Angelfish
         {            
             pManager.AddPointParameter("Solid", "Solid", "Solid or black points", GH_ParamAccess.list);
             pManager.AddPointParameter("Void", "Void", "Void or white points", GH_ParamAccess.list);
-            pManager.AddNumberParameter("PrintOut", "PrintOut", "PrintOut", GH_ParamAccess.item);
-             pManager.AddNumberParameter("Neighbours", "Neighbours", "Neighbours", GH_ParamAccess.tree);
+            //pManager.AddNumberParameter("PrintOut", "PrintOut", "PrintOut", GH_ParamAccess.item);
+            // pManager.AddNumberParameter("Neighbours", "Neighbours", "Neighbours", GH_ParamAccess.tree);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -60,13 +60,14 @@ namespace Angelfish
             for (int i = 0; i < it; i++)
             {
                 reactDiffuse.Update();
-                reactDiffuse.DividePoints();
-            }    
+            }
+
+            reactDiffuse.DividePoints();
 
             DA.SetDataList(0, reactDiffuse.solid);
             DA.SetDataList(1, reactDiffuse.other);
-            DA.SetData(2, reactDiffuse.PrintOut());
-            DA.SetDataTree(3, reactDiffuse.neighbours);
+          //  DA.SetData(2, reactDiffuse.PrintOut());
+          //  DA.SetDataTree(3, reactDiffuse.neighbours);
         }
 
         protected override System.Drawing.Bitmap Icon

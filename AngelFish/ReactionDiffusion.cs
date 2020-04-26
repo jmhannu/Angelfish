@@ -112,9 +112,7 @@ namespace Angelfish
                 double thisb = b[i];
                 int count = mesh.Vertices.Count;
                 List<GH_Number> branch = values.get_Branch(i) as List<GH_Number>;
-                //GH_Path path = values.get_Path(20);
 
-                // double f = values.get_DataItem(path, 2).Value;
                 double f = branch[2].Value;
 
                 nextA[i] = thisa + (branch[0].Value * Laplace(i, true)) - (thisa * thisb * thisb) + (f * (1 - thisa));
@@ -138,14 +136,16 @@ namespace Angelfish
             if (alaplace) sum += a[index] * -1;
             else sum += b[index] * -1;
 
-            GH_Path path = neighbours.get_Path(index);
-            int nrNeigbours = path.Length;
+            //GH_Path path = neighbours.get_Path(index);
+            List<GH_Number> branch = neighbours.get_Branch(index) as List<GH_Number>;
+
+            int nrNeigbours = branch.Count;
 
             double weight = 1.0 / nrNeigbours;
 
             for (int i = 0; i < nrNeigbours; i++)
             {
-                int neighbor = path[i];
+                int neighbor = (int)branch[i].Value;
 
                 if (alaplace) sum += a[neighbor] * weight;
                 else sum += b[neighbor] * weight;
