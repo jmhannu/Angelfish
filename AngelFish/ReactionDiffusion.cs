@@ -28,8 +28,8 @@ namespace Angelfish
 
         public ReactionDiffusion(GH_Structure<GH_Number> _values, Mesh _mesh)
         {
-            values = _values;
             mesh = _mesh;
+            values = _values;
 
             Setup();
             StartRandom();
@@ -37,8 +37,8 @@ namespace Angelfish
 
         public ReactionDiffusion(List<GH_Number> _values, Mesh _mesh)
         {
-            ValuesToTree(_values);
             mesh = _mesh;
+            ValuesToTree(_values);
 
             Setup();
             StartRandom();
@@ -53,6 +53,8 @@ namespace Angelfish
             b = new List<double>();
             nextA = new List<double>();
             nextB = new List<double>();
+            solid = new List<Point3d>();
+            other = new List<Point3d>();
 
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
@@ -65,19 +67,23 @@ namespace Angelfish
 
         private void StartRandom()
         {
-            Random random = new Random(0);
+            Random random = new Random(1);
 
-            for (int r = 0; r < mesh.Vertices.Count * 0.25; r++)
+            for (int r = 0; r < mesh.Vertices.Count*0.1; r ++)
             {
                 int randomIndex = random.Next(0, mesh.Vertices.Count);
 
                 b[randomIndex] = 1.0;
+                a[randomIndex] = 0.0;
 
-                GH_Path path = neighbours.get_Path(randomIndex);
+                List<GH_Number> branch = neighbours.get_Branch(randomIndex) as List<GH_Number>;
 
-                for (int nI = 0; nI < path.Length; nI++)
+                for (int nI = 0; nI < branch.Count; nI++)
                 {
-                    b[nI] = 1.0;
+                    int neigh = (int)branch[nI].Value;
+                     
+                    b[neigh] = 1.0;
+                    a[neigh] = 0.0;
                 }
             }
         }
@@ -100,17 +106,19 @@ namespace Angelfish
 
         private void CalculateRD()
         {
-            for (int i = 0; i < a.Count; i++)
+            for (int i = 0; i < mesh.Vertices.Count; i++)
             {
                 double thisa = a[i];
                 double thisb = b[i];
+                int count = mesh.Vertices.Count;
+                List<GH_Number> branch = values.get_Branch(i) as List<GH_Number>;
+                //GH_Path path = values.get_Path(20);
 
-                GH_Path path = values.get_Path(20);
+                // double f = values.get_DataItem(path, 2).Value;
+                double f = branch[2].Value;
 
-                double f = values.get_DataItem(path, 2).Value;
-
-                nextA[i] = thisa + (values.get_DataItem(path, 0).Value * Laplace(i, true)) - (thisa * thisb * thisb) + (f * (1 - thisa));
-                nextB[i] = thisb + (values.get_DataItem(path, 1).Value * Laplace(i, false)) + (thisa * thisb * thisb) - ((values.get_DataItem(path, 3).Value + f) * thisb);
+                nextA[i] = thisa + (branch[0].Value * Laplace(i, true)) - (thisa * thisb * thisb) + (f * (1 - thisa));
+                nextB[i] = thisb + (branch[1].Value * Laplace(i, false)) + (thisa * thisb * thisb) - ((branch[3].Value + f) * thisb);
             }
         }
 
@@ -175,9 +183,7 @@ namespace Angelfish
 
         public void DividePoints()
         {
-            solid = new List<Point3d>();
-            other = new List<Point3d>();
-            
+
             //mesh.VertexColors.CreateMonotoneMesh(Color.White);
 
             for (int i = 0; i < mesh.Vertices.Count; i++)
@@ -192,7 +198,19 @@ namespace Angelfish
                 else other.Add(mesh.Vertices[i]);
             }
 
-            
+            //for (int i = 0; i < 5; i += 10)
+            //{
+            //    solid.Add(mesh.Vertices[i]);
+
+            //    neighbours.get_Branch(i);
+
+
+            //    for (int j = 0; j < ; j++)
+            //    {
+
+
+            //    }
+            //}
         }
     }
 }

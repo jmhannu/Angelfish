@@ -23,7 +23,9 @@ namespace Angelfish
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddMeshParameter("Mesh", "Mesh", "Mesh", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Varibles", "Varibles", "dA, dB, k, f", GH_ParamAccess.tree);
+            //pManager.AddNumberParameter("Varibles", "Varibles", "dA, dB, k, f", GH_ParamAccess.tree);
+            pManager.AddNumberParameter("Varibles", "Varibles", "dA, dB, k, f", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("Iterations", "Iterations", "Iterations", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -41,16 +43,25 @@ namespace Angelfish
                 Mesh mesh = null;
                 DA.GetData("Mesh", ref mesh);
 
-                GH_Structure<GH_Number> tree;
-                DA.GetDataTree(1, out tree);
+                //GH_Structure<GH_Number> tree;
+                //DA.GetDataTree(1, out tree);
+
+                List<GH_Number> tree = new List<GH_Number>();
+                DA.GetDataList(1, tree);
 
                 reactDiffuse = new ReactionDiffusion(tree, mesh);
 
                 first = false;
             }
 
-            reactDiffuse.Update();
-            reactDiffuse.DividePoints();
+            int it = 0;
+            DA.GetData("Iterations", ref it);
+
+            for (int i = 0; i < it; i++)
+            {
+                reactDiffuse.Update();
+                reactDiffuse.DividePoints();
+            }    
 
             DA.SetDataList(0, reactDiffuse.solid);
             DA.SetDataList(1, reactDiffuse.other);
