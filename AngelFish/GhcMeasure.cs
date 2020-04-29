@@ -6,25 +6,22 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcValues2D : GH_Component
+    public class GhcMeasure : GH_Component
     {
-        List<double> fValues = new List<double>();
-        List<double> kValues = new List<double>();
-        List<double> dAValues = new List<double>();
-        List<double> dBValues = new List<double>();
+        //static string file = Properties.Resources.inputs2D;
+        //Values values = new Values(file);
 
-        static string file = Properties.Resources.inputs2D;
-        Values values = new Values(file);
-
-        public GhcValues2D()
-          : base("Values2D", "Values2D",
-              "Varible combinations for GS RD, suiteble for 2D geometry",
+        public GhcMeasure()
+          : base("Measure", "Measure",
+              "Measure",
               "Angelfish", "Values")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
+            pManager.AddPointParameter("Points", "Points", "Points", GH_ParamAccess.list);
+            pManager.AddTextParameter("Filename", "Filename", "Filename", GH_ParamAccess.item);
             //  pManager.AddNumberParameter("Mass Influence", "Mass", "Mass Influence", GH_ParamAccess.item, 1.0);
             //pManager.AddNumberParameter("Connectivity Influence", "Connectivity", "Connectivity Influence", GH_ParamAccess.item, 1.0);
             //pManager.AddNumberParameter("Edge Connectivity", "Edge", "Edge Connectivity", GH_ParamAccess.item, 1.0);
@@ -35,33 +32,20 @@ namespace Angelfish
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //  pManager.AddNumberParameter("Count combinations", "Count", "Number of varible combinations", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.tree);
-            //  pManager.AddNumberParameter("Mass procentages", "Mass", "Mass procentage per pattern", GH_ParamAccess.list);
-            //  pManager.AddNumberParameter("Solid edges", "Solid edge", "Solid edge percentages", GH_ParamAccess.list);
-            // pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
-            //pManager.AddNumberParameter("Edge connections", "Edge connect", "Percentages of parts with connetion to the edge", GH_ParamAccess.list);
+          //  pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.tree);
+              pManager.AddNumberParameter("Mass procentages", "Mass", "Mass procentage per pattern", GH_ParamAccess.list);
+              pManager.AddNumberParameter("Solid edges", "Solid edge", "Solid edge percentages", GH_ParamAccess.list);
+             pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Edge connections", "Edge connect", "Percentages of parts with connetion to the edge", GH_ParamAccess.list);
             //pManager.AddNumberParameter("Select Index", "Select i", "Heighest/lowest mass index", GH_ParamAccess.list);
             //  pManager.AddNumberParameter("Weighted Number", "Weighted", "Weighted Number", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string[] lines = file.Split('\n');
-
-            foreach (string line in lines)
-            {
-                string fixedLine = line.Replace(',', '.');
-                string[] lineValues = fixedLine.Split('\t');
-
-                dAValues.Add(Convert.ToDouble(lineValues[0]));
-                dBValues.Add(Convert.ToDouble(lineValues[1]));
-                fValues.Add(Convert.ToDouble(lineValues[2]));
-                kValues.Add(Convert.ToDouble(lineValues[3]));
-
-            }
 
             //DA.SetData(0, (double)values.ValuesCount);
-            DA.SetDataTree(0, values.Varibles);
+        //    DA.SetDataTree(0, values.Varibles);
             //DA.SetDataList(2, values.MassProcentages);
             //DA.SetDataList(3, values.SolidEdgeProcentage);
             //DA.SetDataList(4, values.ConnectedProcentages);
@@ -93,7 +77,7 @@ namespace Angelfish
 
         public override Guid ComponentGuid
         {
-            get { return new Guid("4894e15d-9b18-4707-ae51-c70f55899012"); }
+            get { return new Guid("4894e15d-9b18-4707-ae51-c80f55899012"); }
         }
     }
 }
