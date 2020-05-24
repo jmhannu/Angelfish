@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Grasshopper;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 
 namespace Angelfish
@@ -20,13 +22,18 @@ namespace Angelfish
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-             pManager.AddNumberParameter("Index", "Index", "Index", GH_ParamAccess.item, 0.0);
+             pManager.AddIntegerParameter("Index", "Index", "Index", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
+
+            //pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.tree);
+            pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.list);
+
+
+
             //  pManager.AddNumberParameter("Count combinations", "Count", "Number of varible combinations", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.tree);
             //  pManager.AddNumberParameter("Mass procentages", "Mass", "Mass procentage per pattern", GH_ParamAccess.list);
             //  pManager.AddNumberParameter("Solid edges", "Solid edge", "Solid edge percentages", GH_ParamAccess.list);
             // pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
@@ -51,8 +58,19 @@ namespace Angelfish
 
             //}
 
+            int index = 0;
+            DA.GetData(0, ref index);
+
+
+            List<GH_Number> varibles = values.varibles.get_Branch(index) as List<GH_Number>;
+
+            DA.SetDataList(0, varibles);
+
+
+
+
             //DA.SetData(0, (double)values.ValuesCount);
-            //DA.SetDataTree(0, values.Varibles);
+            //  DA.SetDataTree(0, values.Varibles);
             //DA.SetDataList(2, values.MassProcentages);
             //DA.SetDataList(3, values.SolidEdgeProcentage);
             //DA.SetDataList(4, values.ConnectedProcentages);

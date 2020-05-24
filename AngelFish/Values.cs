@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using Grasshopper;
+using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Data;
 
 namespace Angelfish
@@ -16,16 +17,17 @@ namespace Angelfish
         private List<double> edgeConnectionProcentages;
         private List<double> solidEdgeProcentage;
         private List<string> types;
-        private DataTree<double> varibles;
-   
+        //   private DataTree<double> varibles;
+        public GH_Structure<GH_Number> varibles; 
+
         public double WeightedValue; 
-        public int ValuesCount { get { return valuesCount; } }
-        public List<double> MassProcentages { get { return massProcentages; } }
-        public List<double> ConnectedProcentages { get { return connectivityRate; } }
-        public List<double> EdgeConnectionProcentages { get { return edgeConnectionProcentages; } }
-        public List<double> SolidEdgeProcentage { get { return solidEdgeProcentage; } }
-        public List<string> Types { get { return types; } }
-        public DataTree<double> Varibles { get { return varibles; } }
+        //public int ValuesCount { get { return valuesCount; } }
+        //public List<double> MassProcentages { get { return massProcentages; } }
+        //public List<double> ConnectedProcentages { get { return connectivityRate; } }
+        //public List<double> EdgeConnectionProcentages { get { return edgeConnectionProcentages; } }
+        //public List<double> SolidEdgeProcentage { get { return solidEdgeProcentage; } }
+        //public List<string> Types { get { return types; } }
+        //public DataTree<double> Varibles { get { return varibles; } }
 
         public Values()
         {
@@ -91,7 +93,8 @@ namespace Angelfish
             edgeConnectionProcentages = new List<double>();
             solidEdgeProcentage = new List<double>();
             types = new List<string>();
-            varibles = new DataTree<double>();
+           // varibles = new DataTree<double>();
+           varibles = new GH_Structure<GH_Number>();
         }
 
         private void PopulateVaribleTree(List<double> dAValues, List<double> dBValues, List<double> fValues, List<double> kValues)
@@ -99,13 +102,20 @@ namespace Angelfish
 
             for (int i = 0; i < valuesCount; i++)
             {
-                List<double> allVaribles = new List<double>();
-                allVaribles.Add(dAValues[i]);
-                allVaribles.Add(dBValues[i]);
-                allVaribles.Add(fValues[i]);
-                allVaribles.Add(kValues[i]);
+                // List<double> allVaribles = new List<double>();
+                List<GH_Number> allVaribles = new List<GH_Number>();
+                allVaribles.Add(new GH_Number(dAValues[i]));
+                allVaribles.Add(new GH_Number(dBValues[i]));
+                allVaribles.Add(new GH_Number(fValues[i]));
+                allVaribles.Add(new GH_Number(kValues[i]));
 
-                varibles.AddRange(allVaribles, new GH_Path(i));
+                //allVaribles.Add(dAValues[i]);
+                //allVaribles.Add(dBValues[i]);
+                //allVaribles.Add(fValues[i]);
+                //allVaribles.Add(kValues[i]);
+
+                //  varibles.AddRange(allVaribles, new GH_Path(i));
+                varibles.AppendRange(allVaribles, new GH_Path(i));
             }
         }
 
