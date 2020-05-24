@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Grasshopper;
 using Grasshopper.Kernel;
@@ -10,8 +11,14 @@ namespace Angelfish
 {
     public class GhcValuesFor2D : GH_Component
     {
-        static string file = Properties.Resources.inputs2D;
-       Values values = new Values(file, false);
+        static string path = "C:/Users/JH/AppData/Roaming/Grasshopper/Libraries/Angelfish/Data/inputs2D.txt";
+       // static string path = "/Data/inputs2D.txt";
+        static string file = File.ReadAllText(path);
+        Values values = new Values(file, false);
+        //  static string current = System.AppDomain.CurrentDomain.BaseDirectory;
+
+        static GH_AssemblyInfo info = Grasshopper.Instances.ComponentServer.FindAssembly(new Guid("cd580808-e54b-481b-8170-88b45a29aa08"));
+        static string current = info.Location;
 
         public GhcValuesFor2D()
           : base("Values for 2D", "Values for 2D",
@@ -30,7 +37,7 @@ namespace Angelfish
 
             //pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.tree);
             pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.list);
-
+            pManager.AddTextParameter("PrintOut", "PrintOut", "PrintOut", GH_ParamAccess.item);
 
 
             //  pManager.AddNumberParameter("Count combinations", "Count", "Number of varible combinations", GH_ParamAccess.item);
@@ -67,7 +74,7 @@ namespace Angelfish
             DA.SetDataList(0, varibles);
 
 
-
+            DA.SetData(1, current);
 
             //DA.SetData(0, (double)values.ValuesCount);
             //  DA.SetDataTree(0, values.Varibles);
