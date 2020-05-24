@@ -59,7 +59,8 @@
     <Compile Include="GhcMeasure.cs" />
     <Compile Include="GhcPickByMeasure.cs" />
     <Compile Include="GhcUniformRD.cs" />
-    <Compile Include="GhcValues2D.cs" />
+    <Compile Include="GhcValuesFor2D.cs" />
+    <Compile Include="Measure.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

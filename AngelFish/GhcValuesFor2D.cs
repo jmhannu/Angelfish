@@ -6,30 +6,21 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcValues2D : GH_Component
+    public class GhcValuesFor2D : GH_Component
     {
-        List<double> fValues = new List<double>();
-        List<double> kValues = new List<double>();
-        List<double> dAValues = new List<double>();
-        List<double> dBValues = new List<double>();
-
         static string file = Properties.Resources.inputs2D;
-        Values values = new Values(file);
+       Values values = new Values(file, false);
 
-        public GhcValues2D()
-          : base("Values2D", "Values2D",
-              "Varible combinations for GS RD, suiteble for 2D geometry",
+        public GhcValuesFor2D()
+          : base("Values for 2D", "Values for 2D",
+              "Values to use for 2D reaction diffusion",
               "Angelfish", "Values")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            //  pManager.AddNumberParameter("Mass Influence", "Mass", "Mass Influence", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Connectivity Influence", "Connectivity", "Connectivity Influence", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Edge Connectivity", "Edge", "Edge Connectivity", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Solid Edge", "Solid Edge", "Solid Edge", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Range", "Range", "Range to include in selection", GH_ParamAccess.item, 0.0);
+             pManager.AddNumberParameter("Index", "Index", "Index", GH_ParamAccess.item, 0.0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -46,22 +37,22 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string[] lines = file.Split('\n');
+            //string[] lines = file.Split('\n');
 
-            foreach (string line in lines)
-            {
-                string fixedLine = line.Replace(',', '.');
-                string[] lineValues = fixedLine.Split('\t');
+            //foreach (string line in lines)
+            //{
+            //    string fixedLine = line.Replace(',', '.');
+            //    string[] lineValues = fixedLine.Split('\t');
 
-                dAValues.Add(Convert.ToDouble(lineValues[0]));
-                dBValues.Add(Convert.ToDouble(lineValues[1]));
-                fValues.Add(Convert.ToDouble(lineValues[2]));
-                kValues.Add(Convert.ToDouble(lineValues[3]));
+            //    dAValues.Add(Convert.ToDouble(lineValues[0]));
+            //    dBValues.Add(Convert.ToDouble(lineValues[1]));
+            //    fValues.Add(Convert.ToDouble(lineValues[2]));
+            //    kValues.Add(Convert.ToDouble(lineValues[3]));
 
-            }
+            //}
 
             //DA.SetData(0, (double)values.ValuesCount);
-            DA.SetDataTree(0, values.Varibles);
+            //DA.SetDataTree(0, values.Varibles);
             //DA.SetDataList(2, values.MassProcentages);
             //DA.SetDataList(3, values.SolidEdgeProcentage);
             //DA.SetDataList(4, values.ConnectedProcentages);
@@ -91,9 +82,12 @@ namespace Angelfish
             }
         }
 
+        /// <summary>
+        /// Gets the unique ID for this component. Do not change this ID after release.
+        /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("4894e15d-9b18-4707-ae51-c70f55899012"); }
+            get { return new Guid("47aa0cce-98d4-4762-9cdf-7e2fc73cd5bc"); }
         }
     }
 }

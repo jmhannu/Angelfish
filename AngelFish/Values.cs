@@ -3,9 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using Grasshopper;
-using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
-using Rhino.Geometry;
 
 namespace Angelfish
 {
@@ -19,6 +17,7 @@ namespace Angelfish
         private List<double> solidEdgeProcentage;
         private List<string> types;
         private DataTree<double> varibles;
+   
         public double WeightedValue; 
         public int ValuesCount { get { return valuesCount; } }
         public List<double> MassProcentages { get { return massProcentages; } }
@@ -33,10 +32,9 @@ namespace Angelfish
             InitAll();
         }
 
-        public Values(string file)
+        public Values(string file, bool measured)
         {
             InitAll();
-
 
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
@@ -57,22 +55,29 @@ namespace Angelfish
                 dBValues.Add(Convert.ToDouble(lineValues[1]));
                 fValues.Add(Convert.ToDouble(lineValues[2]));
                 kValues.Add(Convert.ToDouble(lineValues[3]));
-                massProcentages.Add(Convert.ToDouble(lineValues[4]));
-                edgeConnectionProcentages.Add(Convert.ToDouble(lineValues[5]));
-                types.Add(lineValues[6]);
-                double partCount = Convert.ToDouble(lineValues[7]);
-                connectivityRate.Add(partCount);
-                solidEdgeProcentage.Add(Convert.ToDouble(lineValues[9]));
 
-                if (partCount > partMax) partMax = partCount;
-                if (partCount < partMin) partMin = partCount;
+                if(measured)
+                {
+                    massProcentages.Add(Convert.ToDouble(lineValues[4]));
+                    edgeConnectionProcentages.Add(Convert.ToDouble(lineValues[5]));
+                    types.Add(lineValues[6]);
+                    double partCount = Convert.ToDouble(lineValues[7]);
+                    connectivityRate.Add(partCount);
+                    solidEdgeProcentage.Add(Convert.ToDouble(lineValues[9]));
+
+                    if (partCount > partMax) partMax = partCount;
+                    if (partCount < partMin) partMin = partCount;
+                }
 
                 valuesCount++;
             }
 
-            for (int i = 0; i < connectivityRate.Count; i++)
+            if(measured)
             {
-                connectivityRate[i] = ReMap(connectivityRate[i], partMin, partMax, 0, 1);
+                for (int i = 0; i < connectivityRate.Count; i++)
+                {
+                    connectivityRate[i] = ReMap(connectivityRate[i], partMin, partMax, 0, 1);
+                }
             }
 
             PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
@@ -158,5 +163,7 @@ namespace Angelfish
 
             return allIndex;
         }
+
+
     }
 }

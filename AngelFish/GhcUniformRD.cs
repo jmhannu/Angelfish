@@ -30,7 +30,8 @@ namespace Angelfish
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddPointParameter("Solid", "Solid", "Solid or black points", GH_ParamAccess.list);
+            //pManager.AddPointParameter("RD Patten", "RD Patten", "RD Patten", GH_ParamAccess.list);
+            pManager.AddGenericParameter("RD Patten", "RD Patten", "RD Patten", GH_ParamAccess.item);
             //pManager.AddPointParameter("Void", "Void", "Void or white points", GH_ParamAccess.list);
             pManager.AddNumberParameter("PrintOut", "PrintOut", "PrintOut", GH_ParamAccess.list);
             //pManager.AddNumberParameter("Neighbours", "Neighbours", "Neighbours", GH_ParamAccess.tree);
@@ -68,8 +69,8 @@ namespace Angelfish
 
 
             reactDiffuse.DividePoints();
-
-            DA.SetDataList("Solid", reactDiffuse.solid);
+            DA.SetData(0, reactDiffuse);
+            //DA.SetDataList("Solid", reactDiffuse.solid);
             //DA.SetDataList(1, reactDiffuse.other);
             // DA.SetDataList(1, reactDiffuse.weights);
             // DA.SetDataTree(2, reactDiffuse.neighbours);

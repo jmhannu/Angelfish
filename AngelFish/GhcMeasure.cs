@@ -10,18 +10,20 @@ namespace Angelfish
     {
         //static string file = Properties.Resources.inputs2D;
         //Values values = new Values(file);
+        Measure measure;
 
         public GhcMeasure()
           : base("Measure", "Measure",
               "Measure",
-              "Angelfish", "Values")
+              "Angelfish", "Measure")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddPointParameter("Points", "Points", "Points", GH_ParamAccess.list);
-            pManager.AddTextParameter("Filename", "Filename", "Filename", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Neighbours", "Neighbours", "Neighbours", GH_ParamAccess.tree);
+            pManager.AddNumberParameter("SecondNeighbours", "SecondNeighbours", "SecondNeighbours", GH_ParamAccess.tree);
             //  pManager.AddNumberParameter("Mass Influence", "Mass", "Mass Influence", GH_ParamAccess.item, 1.0);
             //pManager.AddNumberParameter("Connectivity Influence", "Connectivity", "Connectivity Influence", GH_ParamAccess.item, 1.0);
             //pManager.AddNumberParameter("Edge Connectivity", "Edge", "Edge Connectivity", GH_ParamAccess.item, 1.0);
@@ -43,6 +45,7 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+
 
             //DA.SetData(0, (double)values.ValuesCount);
         //    DA.SetDataTree(0, values.Varibles);
