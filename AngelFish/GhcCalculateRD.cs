@@ -16,7 +16,7 @@ namespace Angelfish
         public GhcCalculateRD()
           : base("Calculate RD", "Calcuate RD",
               "Calulates the Grey Scott Reaction Diffusion pattern on a set of points or vertices",
-              "Angelfish", "Calculate")
+              "Angelfish", "2.Calculate")
         {
         }
 

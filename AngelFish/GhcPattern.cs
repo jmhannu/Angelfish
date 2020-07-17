@@ -12,7 +12,7 @@ namespace Angelfish
         public GhcPattern()
           : base("Pattern", "Pattern",
               "Make Pattern",
-              "Angelfish", "Calcuate")
+              "Angelfish", "2.Calculate")
         {
         }
 
@@ -20,12 +20,13 @@ namespace Angelfish
         {
             pManager.AddGenericParameter("RD", "RD", "RD", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Solid Pattern", "Solids", "Solid Pattern", GH_ParamAccess.item, true);
-            pManager.AddNumberParameter("Threshold value", "Threshold", "Threshold value, boundary value", GH_ParamAccess.item, 0.4);
+            pManager.AddNumberParameter("Threshold", "Threshold", "Threshold, boundary value", GH_ParamAccess.item, 0.4);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Pattern", "Pattern", "Pattern", GH_ParamAccess.item);
+            pManager.AddPointParameter("Points", "Points", "Points", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -40,19 +41,35 @@ namespace Angelfish
             DA.GetData(1, ref solidPattern);
 
             reactDiffuse.DividePoints(treshold);
-           
-            if(solidPattern)
-            {
-                for (int i = 0; i < reactDiffuse.Solid.Count; i++)
-                {
 
+            List<Point3d> outputPoints = new List<Point3d>();
+
+            if (solidPattern)
+            {
+                List<int> solids = new List<int>(reactDiffuse.Solid);
+                reactDiffuse.Asystem.Pattern = new List<int>(solids);
+
+                for (int i = 0; i < solids.Count; i++)
+                {
+                    reactDiffuse.Asystem.Apoints[solids[i]].InPattern = true;
+                    outputPoints.Add(reactDiffuse.Asystem.Apoints[solids[i]].Pos);
                 }
             }
 
             else
             {
+                List<int> voids = new List<int>(reactDiffuse.Void);
+                reactDiffuse.Asystem.Pattern = new List<int>(voids);
 
+                for (int i = 0; i < voids.Count; i++)
+                {
+                    reactDiffuse.Asystem.Apoints[voids[i]].InPattern = true;
+                    outputPoints.Add(reactDiffuse.Asystem.Apoints[voids[i]].Pos);
+                }
             }
+
+            DA.SetData(0, reactDiffuse.Asystem);
+            DA.SetDataList(1, outputPoints);
         }
 
         /// <summary>

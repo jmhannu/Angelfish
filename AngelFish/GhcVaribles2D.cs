@@ -9,7 +9,7 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcValuesFor2D : GH_Component
+    public class GhcVaribles2D : GH_Component
     {
         static string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/AngelFish/Resources/inputs2D.txt";
        // static string path = "/Data/inputs2D.txt";
@@ -20,10 +20,10 @@ namespace Angelfish
         static GH_AssemblyInfo info = Grasshopper.Instances.ComponentServer.FindAssembly(new Guid("cd580808-e54b-481b-8170-88b45a29aa08"));
         static string current = info.Location;
 
-        public GhcValuesFor2D()
-          : base("Values for 2D", "Values for 2D",
-              "Values to use for 2D reaction diffusion",
-              "Angelfish", "Setup")
+        public GhcVaribles2D()
+          : base("Varibles for 2D", "Varibles for 2D",
+              "Varibles to use for 2D patterns on planes/surfaces and alike",
+              "Angelfish", "0.Varibles")
         {
         }
 

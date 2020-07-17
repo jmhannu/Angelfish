@@ -15,46 +15,32 @@ namespace Angelfish
         public GhcMeasure()
           : base("Measure", "Measure",
               "Measure",
-              "Angelfish", "Evaluate")
+              "Angelfish", "3.Evaluate")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Angelfish", "Angelfish", "Angelfish", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Threshold value", "Threshold", "Threshold value, boundary value", GH_ParamAccess.item, 0.4);
+            pManager.AddGenericParameter("Pattern", "Pattern", "Pattern", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddNumberParameter("Mass procentages", "Mass", "Mass procentage per pattern", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Solid edges", "Solid edge", "Solid edge percentages", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Edge connections", "Edge connect", "Percentages of parts with connetion to the edge", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Mass percentage", "Mass", "Mass percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Solid edges percentage", "Solid edge", "Solid edge percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Connected percentage", "Connectivity", "Connected percentage", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            Asystem pattern = null;
+            DA.GetData("Pattern", ref pattern);
 
+            measure = new Measure(pattern);
 
-
-            DA.SetDataList(0, measure.MassProcentages);
-            DA.SetDataList(1, measure.SolidEdgeProcentage);
-            DA.SetDataList(2, measure.ConnectedProcentages);
-            DA.SetDataList(3, measure.EdgeConnectionProcentages);
-
-            //double weightMass, weightConnection, weightEdgeConnection, weightSolidEdge;
-            //weightMass = weightConnection = weightEdgeConnection = weightSolidEdge = 1.0;
-            //double addRange = 0.0;
-
-            //DA.GetData(0, ref weightMass);
-            //DA.GetData(1, ref weightConnection);
-            //DA.GetData(2, ref weightEdgeConnection);
-            //DA.GetData(3, ref weightSolidEdge);
-            //DA.GetData(4, ref addRange);
-
-            //DA.SetDataList(6, values.SelectIndex(weightMass, weightConnection, weightEdgeConnection, weightSolidEdge, addRange));
-            //DA.SetData(7, values.WeightedValue);
+            DA.SetData(0, measure.MassPercentage);
+            DA.SetData(1, measure.SolidEdgePercentage);
+            DA.SetData(2, measure.ConnectedPercentage);
         }
 
         protected override System.Drawing.Bitmap Icon

@@ -13,7 +13,7 @@ namespace Angelfish
         public GhcSetup()
           : base("GhcSetup", "Setup",
               "Prepare for RD",
-              "Angelfish", "Setup")
+              "Angelfish", "1.Setup")
         {
         }
 
@@ -27,8 +27,9 @@ namespace Angelfish
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Angelfish", "Angelfish", "Angelfish", GH_ParamAccess.item);
-         //   pManager.AddNumberParameter("Neighbours", "Neighbours", "Neighbours", GH_ParamAccess.list);
-        //    pManager.AddNumberParameter("SecondNeighbours", "SecondNeighbours", "SecondNeighbours", GH_ParamAccess.list);
+            pManager.AddPointParameter("Min", "Min", "Min", GH_ParamAccess.item);
+            pManager.AddPointParameter("Max", "Max", "Max", GH_ParamAccess.item);
+            pManager.AddNumberParameter("edgeCount", "edgeCount", "edgeCount", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -45,8 +46,9 @@ namespace Angelfish
         //    DA.GetData("Index", ref index);
 
             DA.SetData(0, angelfishSystem);
-          //  DA.SetDataList(1, angelfishSystem.Apoints[index].Neighbours);
-          //  DA.SetDataList(2, angelfishSystem.Apoints[index].SecoundNeighbours);
+            DA.SetData(1, angelfishSystem.min);
+            DA.SetData(2, angelfishSystem.max);
+            DA.SetData(3, angelfishSystem.edgeCount);
         }
 
         protected override System.Drawing.Bitmap Icon

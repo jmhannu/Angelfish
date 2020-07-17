@@ -142,12 +142,15 @@ namespace Angelfish
         {
             for (int i = 0; i < rdSize; i++)
             {
-                if (a[i] < 0.4)
+                if (a[i] < threshold)
                 {
                     Solid.Add(i);
                 }
 
-                else Void.Add(i);
+                else
+                {
+                    Void.Add(i);
+                }
             }
         }
 

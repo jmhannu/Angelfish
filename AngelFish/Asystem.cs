@@ -4,6 +4,7 @@ using System.Linq;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
+using Grasshopper.Kernel.Utility;
 using Rhino.Geometry;
 
 namespace Angelfish
@@ -12,43 +13,30 @@ namespace Angelfish
     {
         public List<Apoint> Apoints;
         public int asize;
+        public int edgeCount;
+        public Point3d min;
+        public Point3d max;
+        public List<int> Pattern;
 
-        public Asystem(List<Apoint> _points)
-        {
-            Apoints = new List<Apoint>();
+        bool excludeX;
+        bool excludeY;
+        bool excludeZ; 
 
-            for (int i = 0; i < _points.Count; i++)
-            {
-                Apoints.Add(_points[i]);
-            }
 
-            asize = Apoints.Count;
-        }
-
-        public Asystem(List<double> _values, List<Point3d> _points)
-        {
-            Apoints = new List<Apoint>();
-
-            for (int i = 0; i < _points.Count; i++)
-            {
-                Apoints.Add(new Apoint(_points[i], _values));
-            }
-
-            asize = Apoints.Count;
-            FindNeighbours(false, 0.0);
-        }
-
-        //public Asystem(GH_Structure<GH_Number> _values, List<Point3d> _points)
+        //public Asystem(List<double> _values, List<Point3d> _points, List<bool> _solids)
         //{
         //    Apoints = new List<Apoint>();
 
         //    for (int i = 0; i < _points.Count; i++)
         //    {
-        //        Apoints.Add(new Apoint(_points[i], _values[i]));
+        //        Apoints.Add(new Apoint(_points[i], _values));
         //    }
 
         //    asize = Apoints.Count;
+
         //    FindNeighbours(false, 0.0);
+        //    MinMax();
+        //    edgeCount = CountEdge();
         //}
 
         public Asystem(List<double> _values, Mesh _mesh)
@@ -57,41 +45,27 @@ namespace Angelfish
 
             for (int i = 0; i < _mesh.Vertices.Count; i++)
             {
-                
+
                 Apoints.Add(new Apoint(_mesh.Vertices[i], _values));
             }
-
             asize = Apoints.Count;
+
+            excludeX = false;
+            excludeY = false;
+            excludeZ = false;
+
+            MinMax();
+
+            edgeCount = CountEdge();
 
             int[] temp = _mesh.Vertices.GetConnectedVertices(0);
             double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
 
             FindNeighbours(true, distance);
-
         }
-
-        //public Asystem(GH_Structure<GH_Number> _values, Mesh _mesh)
-        //{
-        //    Apoints = new List<Apoint>();
-
-        //    for (int i = 0; i < _mesh.Vertices.Count; i++)
-        //    {
-
-        //        Apoints.Add(new Apoint(_mesh.Vertices[i], _values[i]));
-        //    }
-
-        //    asize = Apoints.Count;
-
-        //    int[] temp = _mesh.Vertices.GetConnectedVertices(0);
-        //    double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
-
-        //    FindNeighbours(true, distance);
-        //}
 
         void FindNeighbours(bool _byDistance, double _distance)
         {
-
-
             if (_byDistance)
             {
                 ByDistance(_distance);
@@ -142,7 +116,7 @@ namespace Angelfish
             }
 
 
-                int[][] found = RTree.Point3dKNeighbors(allPoints, allPoints, 8).ToArray();
+            int[][] found = RTree.Point3dKNeighbors(allPoints, allPoints, 8).ToArray();
 
             for (var i = 0; i < found.Length; i++)
             {
@@ -153,10 +127,45 @@ namespace Angelfish
             }
         }
 
+         void MinMax()
+        {
+            min = new Point3d(double.MaxValue, double.MaxValue, double.MaxValue);
+            max = new Point3d(double.MinValue, double.MinValue, double.MinValue);
 
+            for (int i = 0; i < Apoints.Count; i++)
+            {
+                if (max.X < Apoints[i].Pos.X) max.X = Apoints[i].Pos.X;
+                if (max.Y < Apoints[i].Pos.Y) max.Y = Apoints[i].Pos.Y;
+                if (max.Z < Apoints[i].Pos.Z) max.Z = Apoints[i].Pos.Z;
+
+                if (min.X > Apoints[i].Pos.X) min.X = Apoints[i].Pos.X;
+                if (min.Y > Apoints[i].Pos.Y) min.Y = Apoints[i].Pos.Y;
+                if (min.Z > Apoints[i].Pos.Z) min.Z = Apoints[i].Pos.Z;
+            }
+
+            if (min.X == max.X) excludeX = true;
+            if (min.Y == max.Y) excludeY = true;
+            if (min.Z == max.Z) excludeZ = true;
+        }
+         int CountEdge()
+        {
+            int count = 0;
+
+            for (int i = 0; i < Apoints.Count; i++)
+            {
+                if ((!excludeX && (Apoints[i].Pos.X == max.X || Apoints[i].Pos.X == min.X)) ||
+                (!excludeY && (Apoints[i].Pos.Y == max.Y || Apoints[i].Pos.Y == min.Y)) ||
+                (!excludeZ && (Apoints[i].Pos.Z == max.Z || Apoints[i].Pos.Z == min.Z)))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
     }
 
-    public struct Apoint
+    public class Apoint
     {
         // public GH_Point Pos { get; set; }
         public Point3d Pos { get; set; }
@@ -166,19 +175,22 @@ namespace Angelfish
         public double K { get; set; }
         public double F { get; set; }
 
+        public bool InPattern;
+
 
         public List<int> Neighbours { get; set; }
         public List<int> SecoundNeighbours { get; set; }
         public List<double> Weights { get; set; }
 
-        public Apoint(Point3d _point,  double _dA, double _dB, double _f, double _k)
+        public Apoint(Point3d _point, double _dA, double _dB, double _f, double _k)
         {
-            Pos = _point; 
+            Pos = _point;
 
             Da = _dA;
             Db = _dB;
             F = _f;
             K = _k;
+            InPattern = false; 
 
             Neighbours = new List<int>();
             SecoundNeighbours = new List<int>();
@@ -193,10 +205,12 @@ namespace Angelfish
             Db = _values[1];
             F = _values[2];
             K = _values[3];
+            InPattern = false;
 
             Neighbours = new List<int>();
             SecoundNeighbours = new List<int>();
             Weights = new List<double>();
         }
+
     }
 }

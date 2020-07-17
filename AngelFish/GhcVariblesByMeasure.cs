@@ -6,13 +6,13 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcPickByMeasure : GH_Component
+    public class GhcVariblesByMeasure : GH_Component
     {
 
-        public GhcPickByMeasure()
-          : base("PickByMeasure", "Pick",
-              "PickByMeasure",
-              "Angelfish", "Measure")
+        public GhcVariblesByMeasure()
+          : base("VariblesByMeasure", "ByMeasures",
+              "VariblesByMeasure",
+              "Angelfish", "0.Varibles")
         {
         }
 
