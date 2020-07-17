@@ -19,18 +19,12 @@ namespace Angelfish
         private List<double> nextB;
         public List<GH_Number> weights;
 
-        GH_Structure<GH_Number> values;
-        List<double> valueList;
-        public GH_Structure<GH_Number> neighbours;
-        public GH_Structure<GH_Number> secoundNeighbours;
 
-        Mesh mesh;
-        public List<Point3d> solid;
+
+        private List<Apoint> points; 
 
         public ReactionDiffusion(GH_Structure<GH_Number> _values, Mesh _mesh)
         {
-            mesh = _mesh;
-            values = _values;
 
             Setup();
             StartRandom();
@@ -38,13 +32,6 @@ namespace Angelfish
 
         public ReactionDiffusion(List<GH_Number> _values, Mesh _mesh)
         {
-            mesh = _mesh;
-            // ValuesToTree(_values);
-            valueList = new List<double>();
-            for (int i = 0; i < _values.Count; i++)
-            {
-                valueList.Add(_values[i].Value);
-            }
 
             Setup();
             StartRandom();
@@ -53,16 +40,10 @@ namespace Angelfish
 
         private void Setup()
         {
-
-
-            FindNeighboursDistance();
-            //FindNeighbours();
-
             a = new List<double>();
             b = new List<double>();
             nextA = new List<double>();
             nextB = new List<double>();
-            solid = new List<Point3d>();
 
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {

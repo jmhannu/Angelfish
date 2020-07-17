@@ -11,7 +11,7 @@ namespace Angelfish
 {
     public class GhcValuesFor2D : GH_Component
     {
-        static string path = "C:/Users/JH/AppData/Roaming/Grasshopper/Libraries/Angelfish/Data/inputs2D.txt";
+        static string path = "C:/Users/julia/AppData/Roaming/Grasshopper/Libraries/Angelfish/Data/inputs2D.txt";
        // static string path = "/Data/inputs2D.txt";
         static string file = File.ReadAllText(path);
         Values values = new Values(file, false);
