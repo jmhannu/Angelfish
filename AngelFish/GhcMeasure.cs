@@ -15,44 +15,33 @@ namespace Angelfish
         public GhcMeasure()
           : base("Measure", "Measure",
               "Measure",
-              "Angelfish", "Measure")
+              "Angelfish", "Evaluate")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Points", "Points", "Points", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Neighbours", "Neighbours", "Neighbours", GH_ParamAccess.tree);
-            pManager.AddNumberParameter("SecondNeighbours", "SecondNeighbours", "SecondNeighbours", GH_ParamAccess.tree);
-            //  pManager.AddNumberParameter("Mass Influence", "Mass", "Mass Influence", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Connectivity Influence", "Connectivity", "Connectivity Influence", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Edge Connectivity", "Edge", "Edge Connectivity", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Solid Edge", "Solid Edge", "Solid Edge", GH_ParamAccess.item, 1.0);
-            //pManager.AddNumberParameter("Range", "Range", "Range to include in selection", GH_ParamAccess.item, 0.0);
+            pManager.AddGenericParameter("Angelfish", "Angelfish", "Angelfish", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Threshold value", "Threshold", "Threshold value, boundary value", GH_ParamAccess.item, 0.4);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            //  pManager.AddNumberParameter("Count combinations", "Count", "Number of varible combinations", GH_ParamAccess.item);
-          //  pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.tree);
-              pManager.AddNumberParameter("Mass procentages", "Mass", "Mass procentage per pattern", GH_ParamAccess.list);
-              pManager.AddNumberParameter("Solid edges", "Solid edge", "Solid edge percentages", GH_ParamAccess.list);
-             pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Mass procentages", "Mass", "Mass procentage per pattern", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Solid edges", "Solid edge", "Solid edge percentages", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Connectivity rate", "Connectivity", "Connectivity rate", GH_ParamAccess.list);
             pManager.AddNumberParameter("Edge connections", "Edge connect", "Percentages of parts with connetion to the edge", GH_ParamAccess.list);
-            //pManager.AddNumberParameter("Select Index", "Select i", "Heighest/lowest mass index", GH_ParamAccess.list);
-            //  pManager.AddNumberParameter("Weighted Number", "Weighted", "Weighted Number", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
 
 
-            //DA.SetData(0, (double)values.ValuesCount);
-        //    DA.SetDataTree(0, values.Varibles);
-            //DA.SetDataList(2, values.MassProcentages);
-            //DA.SetDataList(3, values.SolidEdgeProcentage);
-            //DA.SetDataList(4, values.ConnectedProcentages);
-            //DA.SetDataList(5, values.EdgeConnectionProcentages);
+
+            DA.SetDataList(0, measure.MassProcentages);
+            DA.SetDataList(1, measure.SolidEdgeProcentage);
+            DA.SetDataList(2, measure.ConnectedProcentages);
+            DA.SetDataList(3, measure.EdgeConnectionProcentages);
 
             //double weightMass, weightConnection, weightEdgeConnection, weightSolidEdge;
             //weightMass = weightConnection = weightEdgeConnection = weightSolidEdge = 1.0;

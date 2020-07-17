@@ -11,7 +11,7 @@ namespace Angelfish
 {
     public class GhcValuesFor2D : GH_Component
     {
-        static string path = "C:/Users/julia/AppData/Roaming/Grasshopper/Libraries/Angelfish/Data/inputs2D.txt";
+        static string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/AngelFish/Resources/inputs2D.txt";
        // static string path = "/Data/inputs2D.txt";
         static string file = File.ReadAllText(path);
         Values values = new Values(file, false);
@@ -23,7 +23,7 @@ namespace Angelfish
         public GhcValuesFor2D()
           : base("Values for 2D", "Values for 2D",
               "Values to use for 2D reaction diffusion",
-              "Angelfish", "Values")
+              "Angelfish", "Setup")
         {
         }
 

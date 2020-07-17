@@ -59,7 +59,8 @@
     <Compile Include="Asystem.cs" />
     <Compile Include="GhcMeasure.cs" />
     <Compile Include="GhcPickByMeasure.cs" />
-    <Compile Include="GhcUniformRD.cs" />
+    <Compile Include="GhcSetup.cs" />
+    <Compile Include="GhcCalculateRD.cs" />
     <Compile Include="GhcValuesFor2D.cs" />
     <Compile Include="Measure.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

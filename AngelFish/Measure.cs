@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Angelfish;
 using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
@@ -9,11 +10,10 @@ using Rhino.Geometry.Collections;
 
 class Measure
 {
-    int size;
-    List<Point3d> points;
-    double normalDistance;
+    int asize;
+    public Asystem Pattern;
     List<bool> set;
-    public GH_Structure<GH_Number> allNeighbours;
+
 
     bool edgepart;
     bool left;
@@ -38,12 +38,8 @@ class Measure
     Vector3d min;
     Vector3d max;
 
-    public Measure(List<Point3d> _points, GH_Structure<GH_Number> _neighbours, GH_Structure<GH_Number> _secoundNeighbours)
+    public Measure(Asystem _asystem)
     {
-        points = new List<Point3d>(_points);
-        _neighbours.MergeStructure(_secoundNeighbours);
-        allNeighbours = new GH_Structure<GH_Number>(_neighbours, false);
-
         Setup();
     }
 
