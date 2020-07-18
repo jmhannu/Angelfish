@@ -59,6 +59,7 @@
     <Compile Include="Asystem.cs" />
     <Compile Include="GhcMeasure.cs" />
     <Compile Include="GhcPattern.cs" />
+    <Compile Include="GhcSaveMeasures.cs" />
     <Compile Include="GhcVariblesByMeasure.cs" />
     <Compile Include="GhcSetup.cs" />
     <Compile Include="GhcCalculateRD.cs" />
@@ -70,7 +71,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ReactionDiffusion.cs" />
-    <Compile Include="Values.cs" />
+    <Compile Include="ReadWrite.cs" />
     <Compile Include="AngelfishInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,46 +5,52 @@ using System.Collections.Generic;
 using Grasshopper;
 using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Data;
+using System.Linq;
 
 namespace Angelfish
 {
 
-    public class Values
+    public class ReadWrite
     {
+        public GH_Structure<GH_Number> Varibles;
         private int valuesCount;
-        private List<double> massProcentages;
-        private List<double> connectivityRate;
-        private List<double> edgeConnectionProcentages;
-        private List<double> solidEdgeProcentage;
-        private List<string> types;
-        //   private DataTree<double> varibles;
-        public GH_Structure<GH_Number> varibles; 
+        private List<double> massPercentage;
+        private List<double> connectedPercentage;
+        private List<double> solidEdgePercentage;
 
-        public double WeightedValue; 
-        //public int ValuesCount { get { return valuesCount; } }
-        //public List<double> MassProcentages { get { return massProcentages; } }
-        //public List<double> ConnectedProcentages { get { return connectivityRate; } }
-        //public List<double> EdgeConnectionProcentages { get { return edgeConnectionProcentages; } }
-        //public List<double> SolidEdgeProcentage { get { return solidEdgeProcentage; } }
-        //public List<string> Types { get { return types; } }
-        //public DataTree<double> Varibles { get { return varibles; } }
+  
+        string path;
+        bool measured; 
+        public double WeightedValue;
 
-        public Values()
+        public ReadWrite(string _path, bool _read)
         {
             InitAll();
+            path = _path;
+
+            if(_read)
+            {
+                Read();
+            }
         }
 
-        public Values(string file, bool measured)
+        private void InitAll()
         {
-            InitAll();
+            valuesCount = 0;
+            massPercentage = new List<double>();
+            connectedPercentage = new List<double>();
+            solidEdgePercentage = new List<double>();
+            Varibles = new GH_Structure<GH_Number>();
+        }
+
+        private void Read()
+        {
+            string file = File.ReadAllText(path);
 
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
             List<double> dAValues = new List<double>();
             List<double> dBValues = new List<double>();
-
-            double partMin = 100000;
-            double partMax = 0;
 
             string[] lines = file.Split('\n');
 
@@ -58,64 +64,63 @@ namespace Angelfish
                 fValues.Add(Convert.ToDouble(lineValues[2]));
                 kValues.Add(Convert.ToDouble(lineValues[3]));
 
-                if(measured)
+                if (lineValues.Length > 6) measured = true;
+                else measured = false; 
+                if (measured)
                 {
-                    massProcentages.Add(Convert.ToDouble(lineValues[4]));
-                    edgeConnectionProcentages.Add(Convert.ToDouble(lineValues[5]));
-                    types.Add(lineValues[6]);
-                    double partCount = Convert.ToDouble(lineValues[7]);
-                    connectivityRate.Add(partCount);
-                    solidEdgeProcentage.Add(Convert.ToDouble(lineValues[9]));
-
-                    if (partCount > partMax) partMax = partCount;
-                    if (partCount < partMin) partMin = partCount;
+                    massPercentage.Add(Convert.ToDouble(lineValues[4]));
+                    connectedPercentage.Add(Convert.ToDouble(lineValues[5]));
+                    solidEdgePercentage.Add(Convert.ToDouble(lineValues[6]));
                 }
 
                 valuesCount++;
             }
 
-            if(measured)
-            {
-                for (int i = 0; i < connectivityRate.Count; i++)
-                {
-                    connectivityRate[i] = ReMap(connectivityRate[i], partMin, partMax, 0, 1);
-                }
-            }
-
             PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
         }
 
-        private void InitAll()
+        public void Write(List<double> _varibles)
         {
-            valuesCount = 0;
-            massProcentages = new List<double>();
-            connectivityRate = new List<double>();
-            edgeConnectionProcentages = new List<double>();
-            solidEdgeProcentage = new List<double>();
-            types = new List<string>();
-           // varibles = new DataTree<double>();
-           varibles = new GH_Structure<GH_Number>();
+            string toWrite = _varibles[0].ToString() + '\t' +
+                _varibles[1].ToString() + '\t' +
+                _varibles[2].ToString() + '\t' +
+                _varibles[3].ToString() + '\n';
+
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(toWrite);
+            }
         }
+        public void Write(List<double>_varibles, double _massP, double _connectedP, double _solidEdgeP, int _iterations)
+        {
+            string toWrite = _varibles[0].ToString() + '\t' +
+                _varibles[1].ToString() + '\t' +
+                _varibles[2].ToString() + '\t' +
+                _varibles[3].ToString() + '\t' +
+                _massP.ToString() + '\t' +
+                _connectedP.ToString() + '\t' +
+                _solidEdgeP.ToString() + '\t' +
+                _iterations.ToString() + '\n';
+
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(toWrite);
+            }
+        }
+
 
         private void PopulateVaribleTree(List<double> dAValues, List<double> dBValues, List<double> fValues, List<double> kValues)
         {
 
             for (int i = 0; i < valuesCount; i++)
             {
-                // List<double> allVaribles = new List<double>();
                 List<GH_Number> allVaribles = new List<GH_Number>();
                 allVaribles.Add(new GH_Number(dAValues[i]));
                 allVaribles.Add(new GH_Number(dBValues[i]));
                 allVaribles.Add(new GH_Number(fValues[i]));
                 allVaribles.Add(new GH_Number(kValues[i]));
 
-                //allVaribles.Add(dAValues[i]);
-                //allVaribles.Add(dBValues[i]);
-                //allVaribles.Add(fValues[i]);
-                //allVaribles.Add(kValues[i]);
-
-                //  varibles.AddRange(allVaribles, new GH_Path(i));
-                varibles.AppendRange(allVaribles, new GH_Path(i));
+                Varibles.AppendRange(allVaribles, new GH_Path(i));
             }
         }
 
@@ -131,11 +136,10 @@ namespace Angelfish
             Dictionary<int, double> dictonary = new Dictionary<int, double>();
             for (int i = 0; i < valuesCount; i++)
             {
-                double remapMass = ReMap(massProcentages[i], 0, 1, 1, 0);
+                double remapMass = ReMap(massPercentage[i], 0, 1, 1, 0);
                 double weightedNr = (remapMass * weightMass) +
-                                     (connectivityRate[i] * weightConnection) +
-                                     (edgeConnectionProcentages[i] * weightEdgeConnection) +
-                                     (solidEdgeProcentage[i] * weightSolidEdge);
+                                     (connectedPercentage[i] * weightConnection) +
+                                     (solidEdgePercentage[i] * weightSolidEdge);
 
                 dictonary.Add(i, weightedNr);
             }
@@ -173,7 +177,6 @@ namespace Angelfish
 
             return allIndex;
         }
-
 
     }
 }
