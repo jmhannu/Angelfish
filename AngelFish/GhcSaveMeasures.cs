@@ -20,11 +20,11 @@ namespace Angelfish
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
+            pManager.AddTextParameter("Path", "Path", "Path to save to", GH_ParamAccess.item);
             pManager.AddNumberParameter("Varibles", "Varibles", "Varibles", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Iterations", "Iterations", "After x iterations", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Mass percentage", "Mass", "Mass percentage", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Solid edges percentage", "Solid edge", "Solid edge percentage", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Connected percentage", "Connectivity", "Connected percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Mass P", "MassP", "Mass percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Solid edge P", "Solid edge P", "Solid edge percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Connectivity P", "Connectivity P", "Connected percentage", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -33,6 +33,24 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            string path = null;
+            DA.GetData("Path", ref path);
+
+            ReadWrite toFile = new ReadWrite(path, false);
+
+            List<double> varibles = new List<double>();
+            DA.GetDataList("Varibles", varibles);
+
+            double massP = 0.0;
+            DA.GetData("Mass P", ref massP);
+
+            double solidEdgeP = 0.0;
+            DA.GetData("Solid edge P", ref solidEdgeP);
+
+            double connectivityP = 0.0;
+            DA.GetData("Connectivity P", ref connectivityP);
+
+            toFile.Write(varibles, massP, connectivityP, solidEdgeP);
         }
 
         /// <summary>
@@ -53,7 +71,7 @@ namespace Angelfish
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("4bae2cde-7696-488e-bbe0-d2805b7499a7"); }
+            get { return new Guid("4bae2cdb-7696-488e-bbe0-d2805b7499b7"); }
         }
     }
 }

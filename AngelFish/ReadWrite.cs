@@ -91,7 +91,7 @@ namespace Angelfish
                 sw.WriteLine(toWrite);
             }
         }
-        public void Write(List<double>_varibles, double _massP, double _connectedP, double _solidEdgeP, int _iterations)
+        public void Write(List<double>_varibles, double _massP, double _connectedP, double _solidEdgeP)
         {
             string toWrite = _varibles[0].ToString() + '\t' +
                 _varibles[1].ToString() + '\t' +
@@ -99,8 +99,7 @@ namespace Angelfish
                 _varibles[3].ToString() + '\t' +
                 _massP.ToString() + '\t' +
                 _connectedP.ToString() + '\t' +
-                _solidEdgeP.ToString() + '\t' +
-                _iterations.ToString() + '\n';
+                _solidEdgeP.ToString() + '\n';
 
             using (StreamWriter sw = File.AppendText(path))
             {
