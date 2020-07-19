@@ -6,6 +6,7 @@ using Grasshopper;
 using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Data;
 using System.Linq;
+using Grasshopper.Kernel;
 
 namespace Angelfish
 {
@@ -23,15 +24,18 @@ namespace Angelfish
         bool measured; 
         public double WeightedValue;
 
-        public ReadWrite(string _path, bool _read)
+        public ReadWrite()
         {
             InitAll();
-            path = _path;
+        }
 
-            if(_read)
-            {
-                Read();
-            }
+        public ReadWrite(string _string, bool _readFile)
+        {
+            InitAll();
+
+            if (_readFile) Read(_string);
+
+            else path = _string;
         }
 
         private void InitAll()
@@ -43,9 +47,9 @@ namespace Angelfish
             Varibles = new GH_Structure<GH_Number>();
         }
 
-        private void Read()
+        private void Read(string file)
         {
-            string file = File.ReadAllText(path);
+            //string file = File.ReadAllText(path);
 
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
@@ -58,6 +62,8 @@ namespace Angelfish
             {
                 string fixedLine = line.Replace(',', '.');
                 string[] lineValues = fixedLine.Split('\t');
+
+                int len = lineValues.Length;
 
                 dAValues.Add(Convert.ToDouble(lineValues[0]));
                 dBValues.Add(Convert.ToDouble(lineValues[1]));
@@ -79,8 +85,12 @@ namespace Angelfish
             PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
         }
 
-        public void Write(List<double> _varibles)
+        public void WriteToFile(List<double> _varibles)
         {
+            Random rand = new Random();
+            DateTime dT = DateTime.Now;
+            string name = dT.ToString("yyyyMMddHHmmss") + rand.Next(0, 999).ToString();
+
             string toWrite = _varibles[0].ToString() + '\t' +
                 _varibles[1].ToString() + '\t' +
                 _varibles[2].ToString() + '\t' +
@@ -91,7 +101,7 @@ namespace Angelfish
                 sw.WriteLine(toWrite);
             }
         }
-        public void Write(List<double>_varibles, double _massP, double _connectedP, double _solidEdgeP)
+        public void WriteToFile(List<double>_varibles, double _massP, double _connectedP, double _solidEdgeP)
         {
             string toWrite = _varibles[0].ToString() + '\t' +
                 _varibles[1].ToString() + '\t' +
@@ -107,6 +117,21 @@ namespace Angelfish
             }
         }
 
+        public void Embedd(List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP)
+        {
+            string toWrite = _varibles[0].ToString() + '\t' +
+                _varibles[1].ToString() + '\t' +
+                _varibles[2].ToString() + '\t' +
+                _varibles[3].ToString() + '\t' +
+                _massP.ToString() + '\t' +
+                _connectedP.ToString() + '\t' +
+                _solidEdgeP.ToString() + '\n';
+
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(toWrite);
+            }
+        }
 
         private void PopulateVaribleTree(List<double> dAValues, List<double> dBValues, List<double> fValues, List<double> kValues)
         {

@@ -8,19 +8,17 @@ namespace Angelfish
 {
     public class GhcSaveMeasures : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the GhcSaveMeasures class.
-        /// </summary>
+        
         public GhcSaveMeasures()
-          : base("Save Measures", "Save Measures",
-              "Save Measures",
+          : base("Embedd varibles and measures", "Embedd Measures",
+              "Save Measures and embed measures",
               "Angelfish", "3.Evaluate")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Path", "Path", "Path to save to", GH_ParamAccess.item);
+            //pManager.AddTextParameter("Path", "Path", "Path to save to", GH_ParamAccess.item);
             pManager.AddNumberParameter("Varibles", "Varibles", "Varibles", GH_ParamAccess.list);
             pManager.AddNumberParameter("Mass P", "MassP", "Mass percentage", GH_ParamAccess.item);
             pManager.AddNumberParameter("Solid edge P", "Solid edge P", "Solid edge percentage", GH_ParamAccess.item);
@@ -33,10 +31,12 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string path = null;
-            DA.GetData("Path", ref path);
+            //string path = null;
+            //DA.GetData("Path", ref path);
 
-            ReadWrite toFile = new ReadWrite(path, false);
+            //ReadWrite toFile = new ReadWrite(path, false);
+
+            ReadWrite writer = new ReadWrite();
 
             List<double> varibles = new List<double>();
             DA.GetDataList("Varibles", varibles);
@@ -50,7 +50,7 @@ namespace Angelfish
             double connectivityP = 0.0;
             DA.GetData("Connectivity P", ref connectivityP);
 
-            toFile.Write(varibles, massP, connectivityP, solidEdgeP);
+            writer.Embedd(varibles, massP, connectivityP, solidEdgeP);
         }
 
         /// <summary>

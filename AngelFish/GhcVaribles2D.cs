@@ -11,12 +11,15 @@ namespace Angelfish
 {
     public class GhcVaribles2D : GH_Component
     {
-        static string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/AngelFish/Resources/inputs2D.txt";
-        ReadWrite fromFile = new ReadWrite(path, true);
+        //static string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/AngelFish/Resources/inputs2D.txt";
+        static string file = Resources.inputs2D;
+        //ReadWrite fromFile = new ReadWrite(path, true);
+        ReadWrite fromFile = new ReadWrite(file, true);
+
 
         public GhcVaribles2D()
-          : base("Varibles for 2D", "Varibles for 2D",
-              "Varibles to use for 2D patterns on planes/surfaces and alike",
+          : base("Embedded varibles and measures for 2D", "Varibles 2D",
+              "Embedded varibles and measure to use for 2D patterns on meshes or 2D grids of points",
               "Angelfish", "0.Varibles")
         {
         }
