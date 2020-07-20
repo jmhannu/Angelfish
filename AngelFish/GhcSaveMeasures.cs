@@ -23,6 +23,7 @@ namespace Angelfish
             pManager.AddNumberParameter("Mass P", "MassP", "Mass percentage", GH_ParamAccess.item);
             pManager.AddNumberParameter("Solid edge P", "Solid edge P", "Solid edge percentage", GH_ParamAccess.item);
             pManager.AddNumberParameter("Connectivity P", "Connectivity P", "Connected percentage", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Pattern", "Pattern", "Pattern", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -50,7 +51,12 @@ namespace Angelfish
             double connectivityP = 0.0;
             DA.GetData("Connectivity P", ref connectivityP);
 
-            writer.Embedd(varibles, massP, connectivityP, solidEdgeP);
+            string name = writer.Embedd(varibles, massP, connectivityP, solidEdgeP);
+
+            Asystem pattern = null;
+            DA.GetData(4, ref pattern);
+
+            writer.WritePattern(name, pattern);
         }
 
         /// <summary>

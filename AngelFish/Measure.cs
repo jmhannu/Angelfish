@@ -111,6 +111,8 @@ class Measure
 
     private void Connectivity()
     {
+        int worthless = 0; 
+
         for (int i = 0; i < apoints.Count; i++)
         {
             if (!set[i])
@@ -126,7 +128,7 @@ class Measure
                     if (
                         (!excludeX && (position.X == max.X || position.X == min.X)) ||
                         (!excludeY && (position.Y == max.Y || position.Y == min.Y))
-                        //|| (!excludeZ && (position.Z == max.Z || position.Z == min.Z))
+                        || (!excludeZ && (position.Z == max.Z || position.Z == min.Z))
                         )
                     {
                         edgeCount++;
@@ -163,7 +165,7 @@ class Measure
                     if (
                         (!excludeX && (position.X == max.X || position.X == min.X)) ||
                         (!excludeY && (position.Y == max.Y || position.Y == min.Y))
-                        //|| (!excludeZ && (position.Z == max.Z || position.Z == min.Z))
+                        || (!excludeZ && (position.Z == max.Z || position.Z == min.Z))
                         )
                     {
                         edgeCount++;

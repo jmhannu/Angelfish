@@ -93,7 +93,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\inputs2D.txt" />
+    <EmbeddedResource Include="Resources\inputs2D.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Embedded2D.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
