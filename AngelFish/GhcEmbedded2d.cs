@@ -9,17 +9,13 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcVaribles2D : GH_Component
+    public class GhcEmbedded2d : GH_Component
     {
-        //static string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/AngelFish/Resources/inputs2D.txt";
-        static string file = Resources.inputs2D;
-        //ReadWrite fromFile = new ReadWrite(path, true);
-        ReadWrite fromFile = new ReadWrite(file, true);
+        static string file;
 
-
-        public GhcVaribles2D()
-          : base("Embedded varibles for 2D", "Varibles 2D",
-              "Embedded varibles to use for 2D patterns on meshes or 2D grids of points",
+        public GhcEmbedded2d()
+          : base("Embedded Patterns 2D", "Patterns 2D",
+              "Embedded varibles and measures for 2D patterns on meshes or 2D grids of points",
               "Angelfish", "0.Varibles")
         {
         }
@@ -32,6 +28,10 @@ namespace Angelfish
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddNumberParameter("Varible combinations", "Varibles", "dA, dB, f, k", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Mass percentage", "Mass", "Mass percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Solid edges percentage", "Solid edge", "Solid edge percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Connected percentage", "Connectivity", "Connected percentage", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Preview", "Preview", "Preview", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -39,6 +39,8 @@ namespace Angelfish
             int index = 0;
             DA.GetData(0, ref index);
 
+            file = Resources.inputs2D;
+            ReadWrite fromFile = new ReadWrite(file, true);
 
             List<GH_Number> varibles = fromFile.Varibles.get_Branch(index) as List<GH_Number>;
 
@@ -54,13 +56,9 @@ namespace Angelfish
                 return null;
             }
         }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("47aa0cce-98d4-4762-9cdf-7e2fc73cd5bc"); }
+            get { return new Guid("a7c10145-1337-401e-8050-1f4bd122400d"); }
         }
     }
 }

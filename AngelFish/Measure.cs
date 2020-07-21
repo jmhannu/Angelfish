@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Angelfish;
 using Grasshopper;
@@ -19,16 +20,16 @@ class Measure
     private List<int> pattern;
     private List<bool> set;
 
-     int parts;
-     int edgeCount;
-     List<int> neighbourCount;
+    public List<int> parts;
+    int edgeCount;
+    List<int> neighbourCount;
 
-      Point3d min;
-      Point3d max;
+    Point3d min;
+    Point3d max;
 
-     bool excludeX;
-     bool excludeY;
-     bool excludeZ;
+    bool excludeX;
+    bool excludeY;
+    bool excludeZ;
 
 
     //bool edgepart;
@@ -55,9 +56,9 @@ class Measure
         apoints = _asystem.Apoints;
         pattern = _asystem.Pattern;
         neighbourCount = new List<int>();
-        parts = 0;
+        parts = new List<int>();
         edgeCount = 0;
- 
+
         set = new List<bool>();
 
         for (int i = 0; i < apoints.Count; i++)
@@ -111,8 +112,6 @@ class Measure
 
     private void Connectivity()
     {
-        int worthless = 0; 
-
         for (int i = 0; i < apoints.Count; i++)
         {
             if (!set[i])
@@ -121,7 +120,8 @@ class Measure
 
                 if (apoints[i].InPattern)
                 {
-                    parts++;
+                    parts.Add(1);
+                    int index = parts.Count-1;
 
                     Point3d position = apoints[i].Pos;
 
@@ -134,7 +134,72 @@ class Measure
                         edgeCount++;
                     }
 
-                    CheckNeighbours(i);
+                    List<int> allNeighbours = new List<int>();
+                    allNeighbours.AddRange(apoints[i].Neighbours);
+                    allNeighbours.AddRange(apoints[i].SecoundNeighbours);
+
+                    List<int> burned = new List<int>();
+
+                    for (int j = 0; j < allNeighbours.Count; j++)
+                    {
+
+                        int myNeighbour = allNeighbours[j];
+
+                        if (!set[myNeighbour])
+                        {
+                            set[myNeighbour] = true;
+
+                            if (apoints[myNeighbour].InPattern)
+                            {
+                                burned.Add(myNeighbour);
+                                parts[index]++;
+                                Point3d mypos = apoints[myNeighbour].Pos;
+
+                                if (
+                                    (!excludeX && (mypos.X == max.X || mypos.X == min.X)) ||
+                                    (!excludeY && (mypos.Y == max.Y || mypos.Y == min.Y))
+                                    || (!excludeZ && (mypos.Z == max.Z || mypos.Z == min.Z))
+                                    )
+                                {
+                                    edgeCount++;
+                                }
+                            }
+                        }
+                    }
+
+                    for (int k = 0; k < burned.Count; k++)
+                    {
+                        List<int> burnedNeighbours = new List<int>();
+                        burnedNeighbours.AddRange(apoints[burned[k]].Neighbours);
+                        burnedNeighbours.AddRange(apoints[burned[k]].SecoundNeighbours);
+
+                        for (int m  = 0; m < burnedNeighbours.Count; m++)
+                        {
+                            int thisNeighbour = burnedNeighbours[m];
+
+                            if (!set[thisNeighbour])
+                            {
+                                set[thisNeighbour] = true;
+
+                                if (apoints[thisNeighbour].InPattern)
+                                {
+                                    burned.Add(thisNeighbour);
+                                    parts[index] ++;
+                                    Point3d thispos = apoints[thisNeighbour].Pos;
+
+                                    if (
+                                        (!excludeX && (thispos.X == max.X || thispos.X == min.X)) ||
+                                        (!excludeY && (thispos.Y == max.Y || thispos.Y == min.Y))
+                                        || (!excludeZ && (thispos.Z == max.Z || thispos.Z == min.Z))
+                                        )
+                                    {
+                                        edgeCount++;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -179,7 +244,16 @@ class Measure
 
     private double ConnectivityRate()
     {
-        return (1.0 / (double)parts);
+        int excluded = 0;
+        int included = 0;
+
+        for (int i = 0; i < parts.Count; i++)
+        {
+            if (parts[i] < 5) excluded += parts[i];
+            else included++; 
+        }
+
+        return (1.0 / ((double)included-((double)excluded / (double)pattern.Count)));
     }
 
     private double SolidEdge(int _totalEdge)
