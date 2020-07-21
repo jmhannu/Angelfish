@@ -80,12 +80,9 @@ namespace Angelfish
                 RectangleF textRectangle = Bounds;
                 textRectangle.Height = 20;
 
-                Random rand = new Random();
-                DateTime dT = DateTime.Now;
-                //graphics.DrawString(Owner.NickName, GH_FontServer.Standard, Brushes.Black, textRectangle, format);
+                graphics.DrawString(Owner.NickName, GH_FontServer.Standard, Brushes.Black, textRectangle, format);
 
-                string name = dT.ToString("yyyyMMddHHmmss") + rand.Next(0,999).ToString();
-                graphics.DrawString(name, GH_FontServer.Standard, Brushes.Black, textRectangle, format);
+
 
                 int displayWidth = (int)(Bounds.Width - padding * 2);
                 int displayHeight = (int)(Bounds.Height - padding * 4);

@@ -11,11 +11,8 @@ namespace Angelfish
 {
     public class GhcVaribles2D : GH_Component
     {
-        //static string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/AngelFish/Resources/inputs2D.txt";
         static string file = Resources.inputs2D;
-        //ReadWrite fromFile = new ReadWrite(path, true);
-        ReadWrite fromFile = new ReadWrite(file, true);
-
+        ReadWrite fromFile = new ReadWrite();
 
         public GhcVaribles2D()
           : base("Embedded varibles for 2D", "Varibles 2D",
@@ -36,12 +33,13 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+
+            fromFile.ReadLegacy(file);
+
             int index = 0;
             DA.GetData(0, ref index);
 
-
             List<GH_Number> varibles = fromFile.Varibles.get_Branch(index) as List<GH_Number>;
-
             DA.SetDataList(0, varibles);
         }
 

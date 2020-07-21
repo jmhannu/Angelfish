@@ -124,4 +124,376 @@
   <data name="inputs2D" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\inputs2D.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="_20200720220332793" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720220332793.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720220959139" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720220959139.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720221431570" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720221431570.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720221903312" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720221903312.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720222332916" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720222332916.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720222805403" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720222805403.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072022323675" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072022323675.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072022370670" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072022370670.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720224137420" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720224137420.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720224608231" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720224608231.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720225040168" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720225040168.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720225516697" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720225516697.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720231650378" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720231650378.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720231650931" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720231650931.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720232354693" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720232354693.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072023235484" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072023235484.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720232825668" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720232825668.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720232825950" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720232825950.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720233256374" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720233256374.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720233256820" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720233256820.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720233727275" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720233727275.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720233727829" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720233727829.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720234200442" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720234200442.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720234200995" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720234200995.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720234629137" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720234629137.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720234629583" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720234629583.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072023505714" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072023505714.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720235057567" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720235057567.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720235525283" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720235525283.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720235525837" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720235525837.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200720235956634" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200720235956634.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072023595680" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072023595680.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721000432108" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721000432108.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721000432554" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721000432554.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721000903493" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721000903493.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721000903939" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721000903939.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721001334628" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721001334628.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072100133474" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072100133474.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072100180953" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072100180953.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721001809607" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721001809607.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721002248719" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721002248719.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721002248750" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721002248750.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721002717623" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721002717623.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721002718178" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721002718178.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721003152233" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721003152233.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721003152678" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721003152678.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721003621137" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721003621137.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721003621941" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721003621941.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721004050337" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721004050337.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721004050891" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721004050891.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721004518499" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721004518499.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721004518889" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721004518889.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721005012524" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721005012524.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072100501279" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072100501279.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721005447628" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721005447628.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072100544775" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072100544775.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721005916536" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721005916536.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721005916982" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721005916982.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072101035035" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072101035035.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721010350480" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721010350480.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721011407453" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721011407453.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_202007210114077" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\202007210114077.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072101184611" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072101184611.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721011846206" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721011846206.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721012321544" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721012321544.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721012321989" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721012321989.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721012757269" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721012757269.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721012757822" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721012757822.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721013230310" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721013230310.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721013230755" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721013230755.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072101365747" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072101365747.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721013657851" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721013657851.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721014131297" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721014131297.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721014131850" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721014131850.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721014559497" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721014559497.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072101455951" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072101455951.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721015030722" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721015030722.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721015030753" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721015030753.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721015504453" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721015504453.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721015504899" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721015504899.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721015933507" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721015933507.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721015933953" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721015933953.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721020402468" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721020402468.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721020402913" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721020402913.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721020836202" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721020836202.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721020836756" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721020836756.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072102130493" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072102130493.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721021305646" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721021305646.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721021733290" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721021733290.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721021733899" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721021733899.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721062131615" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721062131615.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721062131973" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721062131973.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721063255436" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721063255436.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721063255990" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721063255990.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072106383063" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072106383063.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721063830867" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721063830867.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721064257336" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721064257336.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721064257889" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721064257889.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072106472552" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072106472552.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721064725606" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721064725606.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721065152360" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721065152360.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721065152913" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721065152913.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721065620254" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721065620254.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_2020072106562059" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\2020072106562059.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721070047332" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721070047332.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721070047777" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721070047777.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721070516727" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721070516727.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721070516758" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721070516758.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721070944206" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721070944206.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721070944652" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721070944652.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721071415163" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721071415163.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721071415609" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721071415609.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721071846281" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721071846281.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721071846726" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721071846726.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721072316474" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721072316474.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721072316920" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721072316920.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721072744350" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721072744350.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721072744796" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721072744796.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721073223407" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721073223407.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721073223602" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721073223602.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721073652332" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721073652332.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721073652778" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721073652778.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721074723496" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721074723496.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200721074723778" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200721074723778.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

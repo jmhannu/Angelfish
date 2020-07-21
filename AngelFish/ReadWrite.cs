@@ -11,33 +11,32 @@ using Grasshopper.Kernel;
 
 namespace Angelfish
 {
-
     public class ReadWrite
     {
-        public GH_Structure<GH_Number> Varibles;
+        private GH_Structure<GH_Number> varibles;
         private int valuesCount;
         private List<double> massPercentage;
         private List<double> connectedPercentage;
         private List<double> solidEdgePercentage;
+        private List<string> names;
 
-        public List<string> names;
-        string path;
-        bool measured;
+        public List<string> printOut;
+        public string printOne;
+        public List<int> printNumber;
+        public GH_Structure<GH_String> printStructure; 
+
+        public GH_Structure<GH_Number> Varibles { get { return varibles; } }
+        public List<double> MassPercentage { get { return massPercentage; } }
+        public List<double> ConnectedPercentage { get { return connectedPercentage; } }
+        public List<double> SolidEdgePercentage { get { return solidEdgePercentage; } }
+
+        public List<string> Names { get { return names; } }
+
         public double WeightedValue;
 
         public ReadWrite()
         {
             InitAll();
-        }
-
-        public ReadWrite(string _string, bool _readFile)
-        {
-            InitAll();
-
-            if (_readFile) Read();
-            //Read(_string);
-
-            else path = _string;
         }
 
         private void InitAll()
@@ -46,45 +45,32 @@ namespace Angelfish
             massPercentage = new List<double>();
             connectedPercentage = new List<double>();
             solidEdgePercentage = new List<double>();
-            Varibles = new GH_Structure<GH_Number>();
             names = new List<string>();
+            varibles = new GH_Structure<GH_Number>();
+            WeightedValue = 0.0;
         }
 
-        private void Read()
+
+        public void ReadLegacy(string _file)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "Angelfish.Resources.inputs2D.txt";
-            string file;
-
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string result = reader.ReadToEnd();
-                file = result;
-            }
-
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
             List<double> dAValues = new List<double>();
             List<double> dBValues = new List<double>();
 
-            string[] lines = file.Split('\n');
+            string[] lines = _file.Split('\n');
 
             foreach (string line in lines)
             {
                 string fixedLine = line.Replace(',', '.');
                 string[] lineValues = fixedLine.Split('\t');
 
-                int len = lineValues.Length;
-
                 dAValues.Add(Convert.ToDouble(lineValues[0]));
                 dBValues.Add(Convert.ToDouble(lineValues[1]));
                 fValues.Add(Convert.ToDouble(lineValues[2]));
                 kValues.Add(Convert.ToDouble(lineValues[3]));
 
-                if (lineValues.Length > 6) measured = true;
-                else measured = false;
-                if (measured)
+                if (lineValues.Length > 6)
                 {
                     massPercentage.Add(Convert.ToDouble(lineValues[4]));
                     connectedPercentage.Add(Convert.ToDouble(lineValues[5]));
@@ -97,59 +83,84 @@ namespace Angelfish
             PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
         }
 
-        private void Read(string file)
-        {
-            //string file = File.ReadAllText(path);
 
+        public void Read(string _file)
+        {
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
             List<double> dAValues = new List<double>();
             List<double> dBValues = new List<double>();
 
-            string[] lines = file.Split('\n');
-
+            string[] lines = _file.Split('\n');
+            printOut = new List<string>();
+            printNumber = new List<int>();
+            printOne = _file;
+            printStructure = new GH_Structure<GH_String>();
+            List<GH_String> toStructure = new List<GH_String>();
+            int index = 0; 
             foreach (string line in lines)
             {
-                string fixedLine = line.Replace(',', '.');
-                string[] lineValues = fixedLine.Split('\t');
+                string[] lineValues = line.Split('\t');
 
-                int len = lineValues.Length;
+                names.Add(lineValues[0]);
+                printNumber.Add(lineValues.Length);
+;
+               printOut.Add(line);
 
-                dAValues.Add(Convert.ToDouble(lineValues[0]));
-                dBValues.Add(Convert.ToDouble(lineValues[1]));
-                fValues.Add(Convert.ToDouble(lineValues[2]));
-                kValues.Add(Convert.ToDouble(lineValues[3]));
-
-                if (lineValues.Length > 6) measured = true;
-                else measured = false;
-                if (measured)
+                for (int i = 0; i < lineValues.Length; i++)
                 {
-                    massPercentage.Add(Convert.ToDouble(lineValues[4]));
-                    connectedPercentage.Add(Convert.ToDouble(lineValues[5]));
-                    solidEdgePercentage.Add(Convert.ToDouble(lineValues[6]));
+                    toStructure.Add(new GH_String(lineValues[i]));
                 }
 
-                valuesCount++;
+                printStructure.AppendRange(toStructure, new GH_Path(index));
+                index++;
+
+                if(lineValues.Length > 4)
+                {
+                    if (lineValues[1] == "NaN") dAValues.Add((double)-999.999);
+                    else dAValues.Add(double.Parse(lineValues[1]));
+                    if (lineValues[2] == "NaN") dBValues.Add((double)-999.999);
+                    else dBValues.Add(Convert.ToDouble(lineValues[2]));
+
+                    if (lineValues[3] == "NaN") fValues.Add((double)-999.999);
+                    else fValues.Add(double.Parse(lineValues[3]));
+
+                    if (lineValues[4] == "NaN") kValues.Add((double)-999.999);
+                    else kValues.Add(double.Parse(lineValues[4]));
+
+                    if (lineValues.Length > 7)
+                    {
+                        if (lineValues[5] == "NaN") massPercentage.Add((double)-999.999);
+                        else massPercentage.Add(double.Parse(lineValues[5]));
+
+                        if (lineValues[6] == "NaN") connectedPercentage.Add((double)-999.999);
+                        else connectedPercentage.Add(double.Parse(lineValues[6]));
+
+                        if (lineValues[7] == "NaN") solidEdgePercentage.Add((double)-999.999);
+                        else solidEdgePercentage.Add(double.Parse(lineValues[7]));
+                    }
+
+                    valuesCount++;
+                }
+
             }
 
             PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
         }
 
-        public void WriteToFile(List<double> _varibles)
+        public void WriteToFile(List<double> _varibles, string _path)
         {
-
-
             string toWrite = _varibles[0].ToString() + '\t' +
                 _varibles[1].ToString() + '\t' +
                 _varibles[2].ToString() + '\t' +
                 _varibles[3].ToString() + '\n';
 
-            using (StreamWriter sw = File.AppendText(path))
+            using (StreamWriter sw = File.AppendText(_path))
             {
                 sw.WriteLine(toWrite);
             }
         }
-        public void WriteToFile(List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP)
+        public void WriteToFile(List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP, string _path)
         {
             string toWrite = _varibles[0].ToString() + '\t' +
                 _varibles[1].ToString() + '\t' +
@@ -159,10 +170,30 @@ namespace Angelfish
                 _connectedP.ToString() + '\t' +
                 _solidEdgeP.ToString() + '\n';
 
-            using (StreamWriter sw = File.AppendText(path))
+            using (StreamWriter sw = File.AppendText(_path))
             {
                 sw.WriteLine(toWrite);
             }
+        }
+
+        public string Embedd(List<double> _varibles)
+        {
+            Random rand = new Random();
+            DateTime dT = DateTime.Now;
+            string name = dT.ToString("yyyyMMddHHmmss") + rand.Next(0, 999).ToString();
+
+            string toWrite = name + '\t' +
+                _varibles[0].ToString() + '\t' +
+                _varibles[1].ToString() + '\t' +
+                _varibles[2].ToString() + '\t' +
+                _varibles[3].ToString();
+
+            using (StreamWriter sw = File.AppendText("C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/Angelfish/Resources/inputs2D.txt"))
+            {
+                sw.WriteLine(toWrite);
+            }
+
+            return name;
         }
 
         public string Embedd(List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP)
@@ -186,6 +217,31 @@ namespace Angelfish
             }
 
             return name;
+        }
+
+        public List<int> ToPreview(string _name)
+        {
+            List<int> read = new List<int>();
+
+            var assembly = Assembly.GetExecutingAssembly();
+            string resourceName = "Angelfish.Resources." + _name + ".txt";
+            string file;
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                file = result;
+            }
+
+            string[] lineValues = file.Split('\t');
+
+            for (int i = 0; i < lineValues.Length; i++)
+            {
+                read.Add(Convert.ToInt32(lineValues[i]));
+            }
+
+            return read;
         }
 
         public void WritePattern(string _name, Asystem _pattern)
@@ -215,7 +271,7 @@ namespace Angelfish
                 allVaribles.Add(new GH_Number(fValues[i]));
                 allVaribles.Add(new GH_Number(kValues[i]));
 
-                Varibles.AppendRange(allVaribles, new GH_Path(i));
+                varibles.AppendRange(allVaribles, new GH_Path(i));
             }
         }
 
