@@ -289,4 +289,22 @@
   <data name="_20200722022002328" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\20200722022002328.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="_20200722101310325" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200722101310325.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200722102531521" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200722102531521.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200722102958631" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200722102958631.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200722103424729" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200722103424729.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200722103851626" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200722103851626.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="_20200722104319415" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\20200722104319415.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

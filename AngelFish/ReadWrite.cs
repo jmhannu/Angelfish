@@ -22,7 +22,9 @@ namespace Angelfish
         public List<string> printOut;
         public string printOne;
         public List<int> printNumber;
-        public GH_Structure<GH_String> printStructure; 
+        public GH_Structure<GH_String> printStructure;
+
+        public int counted; 
 
         public GH_Structure<GH_Number> Varibles { get { return varibles; } }
         public List<double> MassPercentage { get { return massPercentage; } }
@@ -267,13 +269,12 @@ namespace Angelfish
             return reMaped;
         }
 
-        public List<int> SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge, double addRange)
+        public List<int> SelectIndex(double weightMass, double weightConnection, double weightSolidEdge, double addRange)
         {
-            //----OBS!!!
-            int valuesCount = 0; 
+            counted = massPercentage.Count; 
 
             Dictionary<int, double> dictonary = new Dictionary<int, double>();
-            for (int i = 0; i < valuesCount; i++)
+            for (int i = 0; i < counted; i++)
             {
                 double remapMass = ReMap(massPercentage[i], 0, 1, 1, 0);
                 double weightedNr = (remapMass * weightMass) +
@@ -301,17 +302,18 @@ namespace Angelfish
             bool checking = true;
             int j = 0;
 
-            while (checking)
+            if(weightedList.Count != 0)
             {
-                if (weightedList[j].Value >= compareTo)
+                while (checking)
                 {
-                    allIndex.Add(weightedList[j].Key);
-                    j++;
+                    if (weightedList[j].Value >= compareTo)
+                    {
+                        allIndex.Add(weightedList[j].Key);
+                        j++;
+                    }
+
+                    else checking = false;
                 }
-
-
-                else checking = false;
-
             }
 
             return allIndex;
