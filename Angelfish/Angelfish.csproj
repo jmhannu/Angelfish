@@ -61,9 +61,14 @@
     <Compile Include="GhcEmbedded2d.cs" />
     <Compile Include="GhcMeasure.cs" />
     <Compile Include="GhcPattern.cs" />
+    <Compile Include="GhcPatternToPreview.cs" />
+    <Compile Include="GhcPreviewFromFile.cs" />
+    <Compile Include="GhcPreviewToFile.cs" />
+    <Compile Include="GhcReadFromFile.cs" />
+    <Compile Include="GhcVariblesToFile.cs" />
     <Compile Include="GhpPreview.cs" />
     <Compile Include="GhcSaveMeasures.cs" />
-    <Compile Include="GhcVariblesByMeasure.cs" />
+    <Compile Include="GhcPickByMeasure.cs" />
     <Compile Include="GhcSetup.cs" />
     <Compile Include="GhcCalculateRD.cs" />
     <Compile Include="GhcVaribles2D.cs" />
@@ -90,6 +95,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -100,58 +106,10 @@
     <None Include="Resources\Embedded2D.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\202007210114077.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\2020072022323675.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\2020072022370670.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072023235484.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072023505714.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072023595680.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072100133474.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072100180953.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072100501279.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072100544775.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072101035035.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072101184611.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072101365747.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072101455951.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072102130493.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072106383063.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072106472552.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2020072106562059.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\20200720220332793.txt" />
@@ -184,292 +142,133 @@
     <EmbeddedResource Include="Resources\20200720225516697.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720231650378.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\20200720231650931.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720232354693.txt" />
+    <EmbeddedResource Include="Resources\20200722022002328.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720232825668.txt" />
+    <EmbeddedResource Include="Resources\20200722021538957.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720232825950.txt" />
+    <EmbeddedResource Include="Resources\20200722021109904.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720233256374.txt" />
+    <EmbeddedResource Include="Resources\20200722020645962.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720233256820.txt" />
+    <EmbeddedResource Include="Resources\20200722020218313.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720233727275.txt" />
+    <EmbeddedResource Include="Resources\20200722015752180.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720233727829.txt" />
+    <EmbeddedResource Include="Resources\20200722015326151.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720234200442.txt" />
+    <EmbeddedResource Include="Resources\20200722014844142.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720234200995.txt" />
+    <EmbeddedResource Include="Resources\20200722014419949.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720234629137.txt" />
+    <EmbeddedResource Include="Resources\20200722013955812.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720234629583.txt" />
+    <EmbeddedResource Include="Resources\20200722013055927.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720235057567.txt" />
+    <EmbeddedResource Include="Resources\20200722012201774.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720235525283.txt" />
+    <EmbeddedResource Include="Resources\20200722011736370.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720235525837.txt" />
+    <EmbeddedResource Include="Resources\20200722011307994.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200720235956634.txt" />
+    <EmbeddedResource Include="Resources\20200722010840457.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721000432108.txt" />
+    <EmbeddedResource Include="Resources\20200722010414177.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721000432554.txt" />
+    <EmbeddedResource Include="Resources\20200722005943471.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721000903493.txt" />
+    <EmbeddedResource Include="Resources\20200722005517675.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721000903939.txt" />
+    <EmbeddedResource Include="Resources\20200722004615301.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721001334628.txt" />
+    <EmbeddedResource Include="Resources\20200722004147547.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721001809607.txt" />
+    <EmbeddedResource Include="Resources\20200722003713941.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721002248719.txt" />
+    <EmbeddedResource Include="Resources\20200722003248929.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721002248750.txt" />
+    <EmbeddedResource Include="Resources\20200722002818558.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721002717623.txt" />
+    <EmbeddedResource Include="Resources\20200722002347995.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721002718178.txt" />
+    <EmbeddedResource Include="Resources\20200722001916665.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721003152233.txt" />
+    <EmbeddedResource Include="Resources\20200722001448430.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721003152678.txt" />
+    <EmbeddedResource Include="Resources\20200722001023377.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721003621137.txt" />
+    <EmbeddedResource Include="Resources\20200722000559383.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721003621941.txt" />
+    <EmbeddedResource Include="Resources\20200722000129298.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721004050337.txt" />
+    <EmbeddedResource Include="Resources\20200721235704910.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721004050891.txt" />
+    <EmbeddedResource Include="Resources\20200721235238296.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721004518499.txt" />
+    <EmbeddedResource Include="Resources\20200721234807610.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721004518889.txt" />
+    <EmbeddedResource Include="Resources\20200721234233555.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721005012524.txt" />
+    <EmbeddedResource Include="Resources\20200721140505572.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721005447628.txt" />
+    <EmbeddedResource Include="Resources\20200721140022491.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721005916536.txt" />
+    <EmbeddedResource Include="Resources\20200721135535192.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721005916982.txt" />
+    <EmbeddedResource Include="Resources\20200721135051351.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721010350480.txt" />
+    <EmbeddedResource Include="Resources\20200721134607526.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721011407453.txt" />
+    <EmbeddedResource Include="Resources\20200721133849915.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721011846206.txt" />
+    <EmbeddedResource Include="Resources\2020072201352123.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721012321544.txt" />
+    <EmbeddedResource Include="Resources\2020072201262959.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721012321989.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721012757269.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721012757822.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721013230310.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721013230755.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721013657851.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721014131297.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721014131850.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721014559497.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721015030722.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721015030753.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721015504453.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721015504899.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721015933507.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721015933953.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721020402468.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721020402913.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721020836202.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721020836756.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721021305646.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721021733290.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721021733899.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721062131615.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721062131973.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721063255436.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721063255990.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721063830867.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721064257336.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721064257889.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721064725606.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721065152360.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721065152913.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721065620254.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721070047332.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721070047777.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721070516727.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721070516758.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721070944206.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721070944652.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721071415163.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721071415609.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721071846281.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721071846726.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721072316474.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721072316920.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721072744350.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721072744796.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721073223407.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721073223602.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721073652332.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721073652778.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721074723496.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\20200721074723778.txt" />
+    <EmbeddedResource Include="Resources\2020072200504795.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

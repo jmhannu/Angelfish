@@ -14,7 +14,6 @@ namespace Angelfish
     public class ReadWrite
     {
         private GH_Structure<GH_Number> varibles;
-        private int valuesCount;
         private List<double> massPercentage;
         private List<double> connectedPercentage;
         private List<double> solidEdgePercentage;
@@ -41,7 +40,6 @@ namespace Angelfish
 
         private void InitAll()
         {
-            valuesCount = 0;
             massPercentage = new List<double>();
             connectedPercentage = new List<double>();
             solidEdgePercentage = new List<double>();
@@ -53,6 +51,7 @@ namespace Angelfish
 
         public void ReadLegacy(string _file)
         {
+            int valuesCount = 0;
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
             List<double> dAValues = new List<double>();
@@ -80,12 +79,15 @@ namespace Angelfish
                 valuesCount++;
             }
 
-            PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
+
+            PopulateVaribleTree(dAValues, dBValues, fValues, kValues, valuesCount);
         }
 
 
         public void Read(string _file)
         {
+            int valuesCount = 0;
+
             List<double> fValues = new List<double>();
             List<double> kValues = new List<double>();
             List<double> dAValues = new List<double>();
@@ -145,22 +147,10 @@ namespace Angelfish
 
             }
 
-            PopulateVaribleTree(dAValues, dBValues, fValues, kValues);
+            PopulateVaribleTree(dAValues, dBValues, fValues, kValues, valuesCount);
         }
 
-        public void WriteToFile(List<double> _varibles, string _path)
-        {
-            string toWrite = _varibles[0].ToString() + '\t' +
-                _varibles[1].ToString() + '\t' +
-                _varibles[2].ToString() + '\t' +
-                _varibles[3].ToString() + '\n';
-
-            using (StreamWriter sw = File.AppendText(_path))
-            {
-                sw.WriteLine(toWrite);
-            }
-        }
-        public void WriteToFile(List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP, string _path)
+        public void WriteToFile(string _path, List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP)
         {
             string toWrite = _varibles[0].ToString() + '\t' +
                 _varibles[1].ToString() + '\t' +
@@ -174,26 +164,6 @@ namespace Angelfish
             {
                 sw.WriteLine(toWrite);
             }
-        }
-
-        public string Embedd(List<double> _varibles)
-        {
-            Random rand = new Random();
-            DateTime dT = DateTime.Now;
-            string name = dT.ToString("yyyyMMddHHmmss") + rand.Next(0, 999).ToString();
-
-            string toWrite = name + '\t' +
-                _varibles[0].ToString() + '\t' +
-                _varibles[1].ToString() + '\t' +
-                _varibles[2].ToString() + '\t' +
-                _varibles[3].ToString();
-
-            using (StreamWriter sw = File.AppendText("C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/Angelfish/Resources/inputs2D.txt"))
-            {
-                sw.WriteLine(toWrite);
-            }
-
-            return name;
         }
 
         public string Embedd(List<double> _varibles, double _massP, double _connectedP, double _solidEdgeP)
@@ -244,7 +214,21 @@ namespace Angelfish
             return read;
         }
 
-        public void WritePattern(string _name, Asystem _pattern)
+        public List<int> FilePreview(string _file)
+        {
+            List<int> read = new List<int>();
+
+            string[] lineValues = _file.Split('\t');
+
+            for (int i = 0; i < lineValues.Length; i++)
+            {
+                read.Add(Convert.ToInt32(lineValues[i]));
+            }
+
+            return read;
+        }
+
+        public string WritePattern(Asystem _pattern)
         {
             string toWrite = null;
 
@@ -256,20 +240,21 @@ namespace Angelfish
 
             }
 
-            string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/Angelfish/Resources/" + _name + ".txt";
-            File.WriteAllText(path, toWrite);
+            return toWrite;
         }
 
-        private void PopulateVaribleTree(List<double> dAValues, List<double> dBValues, List<double> fValues, List<double> kValues)
+         
+
+        private void PopulateVaribleTree(List<double> _dAValues, List<double> _dBValues, List<double> _fValues, List<double> _kValues, int _valuesCount)
         {
 
-            for (int i = 0; i < valuesCount; i++)
+            for (int i = 0; i < _valuesCount; i++)
             {
                 List<GH_Number> allVaribles = new List<GH_Number>();
-                allVaribles.Add(new GH_Number(dAValues[i]));
-                allVaribles.Add(new GH_Number(dBValues[i]));
-                allVaribles.Add(new GH_Number(fValues[i]));
-                allVaribles.Add(new GH_Number(kValues[i]));
+                allVaribles.Add(new GH_Number(_dAValues[i]));
+                allVaribles.Add(new GH_Number(_dBValues[i]));
+                allVaribles.Add(new GH_Number(_fValues[i]));
+                allVaribles.Add(new GH_Number(_kValues[i]));
 
                 varibles.AppendRange(allVaribles, new GH_Path(i));
             }
@@ -284,6 +269,9 @@ namespace Angelfish
 
         public List<int> SelectIndex(double weightMass, double weightConnection, double weightEdgeConnection, double weightSolidEdge, double addRange)
         {
+            //----OBS!!!
+            int valuesCount = 0; 
+
             Dictionary<int, double> dictonary = new Dictionary<int, double>();
             for (int i = 0; i < valuesCount; i++)
             {

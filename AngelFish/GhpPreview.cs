@@ -15,7 +15,7 @@ namespace Angelfish
         public GhpPreview()
           : base("Preview Pattern", "Preview",
               "Preview Pattern",
-              "Angelfish", "0.Varibles", GH_ParamAccess.list)
+              "Angelfish", "4. Utility", GH_ParamAccess.list)
         {
         }
 

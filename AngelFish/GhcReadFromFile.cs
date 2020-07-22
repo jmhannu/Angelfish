@@ -1,27 +1,25 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using Grasshopper;
+
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcEmbedded2d : GH_Component
+    public class GhcVariblesFromFile : GH_Component
     {
-
-
-        public GhcEmbedded2d()
-          : base("Embedded Patterns 2D", "Patterns 2D",
-              "Embedded varibles and measures for 2D patterns on meshes or 2D grids of points",
+        public GhcVariblesFromFile()
+          : base("Varibles from file", "Varibles file",
+              "Read varibles and measures from tab-seperated .txt file. One line per varible combination. Order: dA /t/ dB /t/ f /t/ k /t/ mass /t/ connectivity /t/ edge",
               "Angelfish", "0.Varibles")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
+            pManager.AddTextParameter("Path", "Path", "Path", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Index", "Index", "Index", GH_ParamAccess.item, 0);
         }
 
@@ -31,30 +29,32 @@ namespace Angelfish
             pManager.AddNumberParameter("Mass percentage", "Mass", "Mass percentage", GH_ParamAccess.item);
             pManager.AddNumberParameter("Connected percentage", "Connectivity", "Connected percentage", GH_ParamAccess.item);
             pManager.AddNumberParameter("Solid edges percentage", "Solid edge", "Solid edge percentage", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Preview", "Preview", "Preview", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            ReadWrite readValues = new ReadWrite();
-            string file = File.ReadAllText("C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/Angelfish/Resources/Embedded2D.txt");
-
-
-            readValues.Read(file);
+            string path = null; 
+            DA.GetData(0, ref path);
 
             int index = 0;
-            DA.GetData(0, ref index);
+            DA.GetData(1, ref index);
+
+            ReadWrite readValues = new ReadWrite();
+            string file = File.ReadAllText(path);
+
+            readValues.ReadLegacy(file);
 
             List<GH_Number> varibles = readValues.Varibles.get_Branch(index) as List<GH_Number>;
 
             DA.SetDataList(0, varibles);
-            DA.SetData(1, readValues.MassPercentage[index]);
-            DA.SetData(3, readValues.ConnectedPercentage[index]);
-            DA.SetData(2, readValues.SolidEdgePercentage[index]);
-
-            DA.SetDataList(4, readValues.ToPreview(readValues.Names[index]));
+            DA.SetDataList(1, readValues.MassPercentage);
+            DA.SetDataList(3, readValues.ConnectedPercentage);
+            DA.SetDataList(2, readValues.SolidEdgePercentage);
         }
 
+        /// <summary>
+        /// Provides an Icon for the component.
+        /// </summary>
         protected override System.Drawing.Bitmap Icon
         {
             get
@@ -64,9 +64,13 @@ namespace Angelfish
                 return null;
             }
         }
+
+        /// <summary>
+        /// Gets the unique ID for this component. Do not change this ID after release.
+        /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("a7c10145-1337-401e-8050-1f4bd122400d"); }
+            get { return new Guid("701cd6c1-8563-4bb0-8508-d1a16ce79f95"); }
         }
     }
 }

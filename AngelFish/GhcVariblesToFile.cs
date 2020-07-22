@@ -7,24 +7,26 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcSaveMeasures : GH_Component
+    public class GhcVariblesToFile : GH_Component
     {
-        
-        public GhcSaveMeasures()
-          : base("Embedd varibles and measures", "Embedd Measures",
-              "Save Measures and embed measures",
-              "Angelfish", "3.Evaluate")
+
+        public GhcVariblesToFile()
+          : base("Varibles and measures to file", "Varibles To File",
+              "Saves varibles and measures to .txt file",
+              "Angelfish", "4. Utility")
         {
         }
-
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            //pManager.AddTextParameter("Path", "Path", "Path to save to", GH_ParamAccess.item);
+            pManager.AddTextParameter("Path", "Path", "Path to save to", GH_ParamAccess.item);
             pManager.AddNumberParameter("Varibles", "Varibles", "Varibles", GH_ParamAccess.list);
             pManager.AddNumberParameter("Mass P", "MassP", "Mass percentage", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Solid edge P", "Solid edge P", "Solid edge percentage", GH_ParamAccess.item);
             pManager.AddNumberParameter("Connectivity P", "Connectivity P", "Connected percentage", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Pattern", "Pattern", "Pattern", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Solid edge P", "Solid edge P", "Solid edge percentage", GH_ParamAccess.item);
+
+            pManager[2].Optional = true;
+            pManager[3].Optional = true;
+            pManager[4].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -33,10 +35,8 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            //string path = null;
-            //DA.GetData("Path", ref path);
-
-            //ReadWrite toFile = new ReadWrite(path, false);
+            string path = null;
+            DA.GetData("Path", ref path);
 
             ReadWrite writer = new ReadWrite();
 
@@ -52,14 +52,7 @@ namespace Angelfish
             double connectivityP = 0.0;
             DA.GetData("Connectivity P", ref connectivityP);
 
-            string name = writer.Embedd(varibles, massP, connectivityP, solidEdgeP);
-
-            Asystem pattern = null;
-            DA.GetData(4, ref pattern);
-
-            string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/Angelfish/Resources/" + name + ".txt";
-            string toWrite = writer.WritePattern(pattern);
-            File.WriteAllText(path, toWrite);
+            writer.WriteToFile(path, varibles, massP, connectivityP, solidEdgeP);
         }
 
         /// <summary>
@@ -80,7 +73,7 @@ namespace Angelfish
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("4bae2cdb-7696-488e-bbe0-d2805b7499b7"); }
+            get { return new Guid("ca63cee2-84b2-4223-af79-203dc937a945"); }
         }
     }
 }
