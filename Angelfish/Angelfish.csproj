@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Asystem.cs" />
     <Compile Include="AttributePreview.cs" />
+    <Compile Include="GhcColourGradient.cs" />
     <Compile Include="GhcEmbedded2d.cs" />
     <Compile Include="GhcMeasure.cs" />
     <Compile Include="GhcPattern.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="GhcSetup.cs" />
     <Compile Include="GhcCalculateRD.cs" />
     <Compile Include="GhcVaribles2D.cs" />
+    <Compile Include="Interpolate.cs" />
     <Compile Include="Measure.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
