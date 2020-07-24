@@ -30,7 +30,8 @@ namespace Angelfish
             points = mesh.Vertices;
             InitAll();
             MinMax();
-            OneDim();
+            //OneDim();
+            BiLinear();
         }
 
         public Interpolate(Mesh mesh, Vector3d _unitVector)
@@ -121,12 +122,12 @@ namespace Angelfish
 
         void BiLinear()
         {
+            List<int> minY = new List<int>();
+            List<int> maxY = new List<int>();
+
             for (int i = 0; i < points.Count; i++)
             {
-                List<int> minY = new List<int>();
-                List<int> maxY = new List<int>();
-
-                if (points[i].Y == min.Y )
+                if (points[i].Y == min.Y)
                 {
                     int red = 255;
                     int blue = 0;
@@ -139,7 +140,7 @@ namespace Angelfish
                     minY.Add(i);
                 }
 
-                else if(points[i].Y == max.Y)
+                else if (points[i].Y == max.Y)
                 {
                     int red = 0;
                     int blue = 255;
@@ -152,13 +153,32 @@ namespace Angelfish
                     maxY.Add(i);
                 }
 
+                else colours.Add(new Color());
             }
 
             for (int i = 0; i < points.Count; i++)
             {
                  if(points[i].Y != max.Y || points[i].Y != min.Y)
                 {
+                    int thisMax = 0; 
+                    int thisMin = 0; 
+                    for (int j = 0; j < minY.Count; j++)
+                    {
+                        if (points[i].X == points[minY[j]].X) thisMin = minY[j];
+                    }
 
+                    for (int j = 0; j < minY.Count; j++)
+                    {
+                        if (points[i].X == points[maxY[j]].X) thisMax = maxY[j];
+                    }
+
+                    float fr = fraction(points[i].Y, points[thisMax].Y, points[thisMin].Y);
+
+                    int green = colours[thisMin].G;
+                    float red = Lerp(colours[thisMin].R, colours[thisMax].R, fr);
+                    float blue = Lerp(colours[thisMin].B, colours[thisMax].B, fr);
+
+                    colours[i] = Color.FromArgb((int)red, green, (int)blue);
                 }
             }
         }

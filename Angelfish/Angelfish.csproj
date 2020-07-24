@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apoint.cs" />
     <Compile Include="Asystem.cs" />
     <Compile Include="AttributePreview.cs" />
     <Compile Include="GhcColourGradient.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="GhcPreviewFromFile.cs" />
     <Compile Include="GhcPreviewToFile.cs" />
     <Compile Include="GhcReadFromFile.cs" />
+    <Compile Include="GhcSetRegion.cs" />
     <Compile Include="GhcVariblesToFile.cs" />
     <Compile Include="GhpPreview.cs" />
     <Compile Include="GhcSaveMeasures.cs" />
