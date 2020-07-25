@@ -22,6 +22,7 @@ namespace Angelfish
         bool excludeY;
         bool excludeZ;
 
+        public Asystem() { }
 
         public Asystem(List<double> _values, Mesh _mesh, List<int> _indicies)
         {
