@@ -20,7 +20,21 @@ namespace Angelfish
               "Combine regions into one mesh",
               "Angelfish", "1.Setup")
         {
+            Params.ParameterSourcesChanged += AddInput;
+        }
 
+        private void AddInput(Object _sender, GH_ParamServerEventArgs _eventargs)
+        {
+            if (_eventargs.ParameterSide == GH_ParameterSide.Input)
+            {
+                if (Params.Input.Last().Sources.Any())
+                {
+                    IGH_Param toAdd = CreateParameter(GH_ParameterSide.Input, Params.Input.Count);
+                    Params.RegisterInputParam(toAdd, Params.Input.Count);
+                    VariableParameterMaintenance();
+                    this.Params.OnParametersChanged();
+                }
+            }
         }
         protected override Bitmap Internal_Icon_24x24
         {
@@ -33,32 +47,47 @@ namespace Angelfish
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddMeshParameter("Mesh", "Mesh", "Mesh", GH_ParamAccess.item);
-            pManager.AddGenericParameter("A", "A", "A", GH_ParamAccess.list);
+            pManager.AddGenericParameter("A", "A", "Apoint from region, zoom to add more inputs", GH_ParamAccess.list);
 
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Asystem", "Asystem", "Asystem", GH_ParamAccess.item);
-
+            pManager.AddPointParameter("Apoints", "Apoints", "Apoints", GH_ParamAccess.list);
+            pManager.AddColourParameter("Colours", "Colours", "Colours", GH_ParamAccess.list);
         }
 
+       
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Mesh mesh = null;
             DA.GetData(0, ref mesh);
 
-            double result = 0, aux = 0;
-            for (int i = 1; i < Params.Input.Count-1; i++)
+            DataTree<Apoint> regions = new DataTree<Apoint>();
+            List<Apoint> aux = new List<Apoint>();
+
+            for (int i = 1; i < Params.Input.Count; i++)
             {
-                if (DA.GetData(i, ref aux))
+                if (DA.GetDataList(i, aux))
                 {
-                    result += aux;
+                    regions.AddRange(aux);
                 }
             }
-            DA.SetData(0, result);
 
+            Gradient gradient = new Gradient(regions, mesh);
+
+            List<Point3d> outpoints = new List<Point3d>();
+
+            for (int i = 0; i < gradient.Apoints.Count; i++)
+            {
+                outpoints.Add(gradient.Apoints[i].Pos);
+            }
+
+            DA.SetDataList(0, outpoints);
+            DA.SetDataList(1, gradient.colors);
         }
+
+
 
         public override Guid ComponentGuid
         {
@@ -68,9 +97,8 @@ namespace Angelfish
 
         #region Methods of IGH_VariableParameterComponent interface
 
-        bool IGH_VariableParameterComponent.CanInsertParameter(GH_ParameterSide side, int index)
+        public bool CanInsertParameter(GH_ParameterSide side, int index)
         {
-            //We only let input parameters to be added (output number is fixed at one)
             if (side == GH_ParameterSide.Input)
             {
                 return true;
@@ -81,9 +109,8 @@ namespace Angelfish
             }
         }
 
-        bool IGH_VariableParameterComponent.CanRemoveParameter(GH_ParameterSide side, int index)
+        public bool CanRemoveParameter(GH_ParameterSide side, int index)
         {
-            //We can only remove from the input
             if (side == GH_ParameterSide.Input && Params.Input.Count > 0)
             {
                 return true;
@@ -92,35 +119,31 @@ namespace Angelfish
             {
                 return false;
             }
+
         }
-        IGH_Param IGH_VariableParameterComponent.CreateParameter(GH_ParameterSide side, int index)
+        public IGH_Param CreateParameter(GH_ParameterSide side, int index)
         {
-            Param_Number param = new Param_Number();
-
-            List<string> names = new List<string>();
-
+            Param_GenericObject param = new Param_GenericObject();
             param.Name = GH_ComponentParamServer.InventUniqueNickname("BCDEFGHIJKLMNOPQRSTUVWXYZ", Params.Input);
             param.NickName = param.Name;
             param.Description = "Param" + (Params.Input.Count + 1);
-            param.SetPersistentData(0.0);
+            param.Access = GH_ParamAccess.list;
+            param.Optional = true;
 
             return param;
         }
 
-        bool IGH_VariableParameterComponent.DestroyParameter(GH_ParameterSide side, int index)
+        public bool DestroyParameter(GH_ParameterSide side, int index)
         {
-            //Nothing to do here by the moment
             return true;
         }
 
-        void IGH_VariableParameterComponent.VariableParameterMaintenance()
+        public void VariableParameterMaintenance()
         {
-            //Nothing to do here by the moment
+           
         }
 
         #endregion
 
     }
-
-
 }

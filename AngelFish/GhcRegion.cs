@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using GH_IO.Types;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -17,33 +17,51 @@ namespace Angelfish
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Vertices", "Vertices", "Vertices", GH_ParamAccess.list);
+            pManager.AddMeshParameter("Mesh", "Mesh", "Mesh", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Cull pattern", "Cull", "Cull pattern, list of true/false of the same length as the number of mesh verticies", GH_ParamAccess.list);
             pManager.AddNumberParameter("Values", "Values", "Values", GH_ParamAccess.list);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Region", "Region", "Region", GH_ParamAccess.list);
+            pManager.AddPointParameter("Points", "Points", "Points", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("Indicies", "Indicies", "Indicies", GH_ParamAccess.list);
         }
 
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
 
-            List<Point3d> vertices = new List<Point3d>();
-            DA.GetDataList(0, vertices);
+            Mesh mesh = null;
+            DA.GetData(0, ref mesh);
+
+            List<bool> cullPattern = new List<bool>();
+            DA.GetDataList(1, cullPattern);
 
             List<double> values = new List<double>();
-            DA.GetDataList(1, values);
+            DA.GetDataList(2, values);
+
 
             List<Apoint> apoints = new List<Apoint>();
 
-            for (int i = 0; i < vertices.Count; i++)
+            for (int i = 0; i < mesh.Vertices.Count; i++)
             {
-                apoints.Add(new Apoint(vertices[i], values));
+                if(cullPattern[i]) apoints.Add(new Apoint(mesh.Vertices[i], i, values));
+            }
+
+            List<Point3d> output = new List<Point3d>();
+            List<int> indicies = new List<int>();
+                
+            for (int i = 0; i < apoints.Count; i++)
+            {
+                output.Add(apoints[i].Pos);
+                indicies.Add(apoints[i].Index);
             }
 
             DA.SetDataList(0, apoints);
+            DA.SetDataList(1, output);
+            DA.SetDataList(2, indicies);
         }
 
         /// <summary>

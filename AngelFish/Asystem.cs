@@ -43,13 +43,7 @@ namespace Angelfish
 
             asize = Apoints.Count;
 
-            excludeX = false;
-            excludeY = false;
-            excludeZ = false;
-
-            MinMax();
-
-            edgeCount = CountEdge();
+            InitAll();
 
             int[] temp = _mesh.Vertices.GetConnectedVertices(0);
             double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
@@ -68,6 +62,16 @@ namespace Angelfish
             }
             asize = Apoints.Count;
 
+            InitAll();
+
+            int[] temp = _mesh.Vertices.GetConnectedVertices(0);
+            double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
+
+            FindNeighbours(true, distance);
+        }
+
+        void InitAll()
+        {
             excludeX = false;
             excludeY = false;
             excludeZ = false;
@@ -76,10 +80,7 @@ namespace Angelfish
 
             edgeCount = CountEdge();
 
-            int[] temp = _mesh.Vertices.GetConnectedVertices(0);
-            double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
 
-            FindNeighbours(true, distance);
         }
 
         void FindNeighbours(bool _byDistance, double _distance)

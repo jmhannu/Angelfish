@@ -59,6 +59,7 @@
     <Compile Include="Apoint.cs" />
     <Compile Include="Asystem.cs" />
     <Compile Include="AttributePreview.cs" />
+    <Compile Include="ColibriOutputs.cs" />
     <Compile Include="GhcCombine.cs" />
     <Compile Include="GhcColourGradient.cs" />
     <Compile Include="GhcEmbedded2d.cs" />
@@ -93,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ThisComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
