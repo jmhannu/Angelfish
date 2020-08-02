@@ -11,27 +11,56 @@ using Rhino.Geometry.Collections;
 
 namespace Angelfish
 {
-    public class ReactionDiffusion
+    public class Pattern : Asystem
     {
-        private List<double> a;
+        public List<double> a;
         private List<double> b;
         private List<double> nextA;
         private List<double> nextB;
 
-        public Asystem Asystem;
         readonly int rdSize;
+        public List<int> InPattern;
+
 
         public List<int> Solid;
         public List<int> Void;
 
-        public ReactionDiffusion(Asystem _asystem)
+        public Pattern() : base()
         {
-            Asystem = _asystem;
-            rdSize = Asystem.asize;
+            Apoints = new List<Apoint>();
+            InitAll();
+        }
+
+        public Pattern(Pattern _pattern) : base(_pattern)
+        {
+            this.Apoints = _pattern.Apoints;
+            this.a = _pattern.a;
+            this.b = _pattern.b;
+            this.nextA = _pattern.nextA;
+            this.nextB = _pattern.nextB;
+            this.rdSize = _pattern.rdSize;
+            this.Solid = _pattern.Solid;
+            this.Void = _pattern.Void;
+            this.InPattern = _pattern.InPattern;
+        }
+
+        public Pattern(Asystem _asystem) : base(_asystem)
+        {
+            Apoints = _asystem.Apoints;
+            rdSize = Apoints.Count;
+
             Setup();
             Start();
         }
 
+        public Pattern(List<Apoint> _apoints) : base()
+        {
+            Apoints = _apoints;
+            rdSize = Apoints.Count;
+
+            Setup();
+            Start();
+        }
 
         private void Setup()
         {
@@ -58,8 +87,8 @@ namespace Angelfish
             b[rdSize / 2] = 1.0;
             a[rdSize / 2] = 0.0;
 
-            List<int> near1 = Asystem.Apoints[rdSize / 2].Neighbours;
-            List<int> near2 = Asystem.Apoints[rdSize / 2].SecoundNeighbours;
+            List<int> near1 = Apoints[rdSize / 2].Neighbours;
+            List<int> near2 = Apoints[rdSize / 2].SecoundNeighbours;
 
             for (int i = 0; i < near1.Count; i++)
             {
@@ -78,18 +107,16 @@ namespace Angelfish
             Swap();
         }
 
-
         private void CalculateRD()
         {
-
             for (int i = 0; i < rdSize; i++)
             {
                 double thisa = a[i];
                 double thisb = b[i];
-                double f = Asystem.Apoints[i].F;
+                double f = Apoints[i].F;
 
-                nextA[i] = thisa + (Asystem.Apoints[i].Da * Laplace(i, true)) - (thisa * thisb * thisb) + (f * (1 - thisa));
-                nextB[i] = thisb + (Asystem.Apoints[i].Db * Laplace(i, false)) + (thisa * thisb * thisb) - ((Asystem.Apoints[i].K + f) * thisb);
+                nextA[i] = thisa + (Apoints[i].Da * Laplace(i, true)) - (thisa * thisb * thisb) + (f * (1 - thisa));
+                nextB[i] = thisb + (Apoints[i].Db * Laplace(i, false)) + (thisa * thisb * thisb) - ((Apoints[i].K + f) * thisb);
             }
         }
 
@@ -110,8 +137,8 @@ namespace Angelfish
             if (alaplace) sum += a[index] * (-1.0);
             else sum += b[index] * (-1.0);
 
-            List<int> first = Asystem.Apoints[index].Neighbours;
-            List<int> secound = Asystem.Apoints[index].SecoundNeighbours;
+            List<int> first = Apoints[index].Neighbours;
+            List<int> secound = Apoints[index].SecoundNeighbours;
 
             double x = 0;
             x += first.Count;
@@ -153,23 +180,5 @@ namespace Angelfish
                 }
             }
         }
-
-        //public double PrintOut()
-        //{
-        //    GH_Path path = values.get_Path(20);
-
-        //    return values.get_DataItem(path, 0).Value;
-
-        //}
-
-        //private void ValuesToTree(List<GH_Number> _values)
-        //{
-        //    values = new GH_Structure<GH_Number>();
-
-        //    for (int i = 0; i < mesh.Vertices.Count; i++)
-        //    {
-        //        values.AppendRange(_values, new GH_Path(i));
-        //    }
-        //}
     }
 }

@@ -6,12 +6,12 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcSetup : GH_Component
+    public class GhcSet : GH_Component
     {
         Asystem angelfishSystem;
 
-        public GhcSetup()
-          : base("GhcSetup", "Setup",
+        public GhcSet()
+          : base("Set values", "Set",
               "Prepare for RD",
               "Angelfish", "1.Setup")
         {

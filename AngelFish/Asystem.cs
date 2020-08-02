@@ -12,43 +12,40 @@ namespace Angelfish
     public class Asystem
     {
         public List<Apoint> Apoints;
-        public int asize;
         public int edgeCount;
         public Point3d min;
         public Point3d max;
-        public List<int> Pattern;
 
-        bool excludeX;
-        bool excludeY;
-        bool excludeZ;
+        protected bool excludeX;
+        protected bool excludeY;
+        protected bool excludeZ;
 
-        public Asystem() { }
+        public Asystem()
+        {
+        }
 
-        public Asystem(List<double> _values, Mesh _mesh, List<int> _indicies)
+        public Asystem(Asystem _asystem)
+        {
+            this.edgeCount = _asystem.edgeCount;
+            this.min = _asystem.min;
+            this.max = _asystem.max;
+
+            this.excludeX = _asystem.excludeX;
+            this.excludeY = _asystem.excludeY;
+            this.excludeZ = _asystem.excludeZ;
+        }
+
+        public Asystem(List<double> _values, Mesh _mesh, List<bool> _cull)
         {
             Apoints = new List<Apoint>();
 
             for (int i = 0; i < _mesh.Vertices.Count; i++)
             {
-                Apoints.Add(new Apoint(_mesh.Vertices[i]));
+                if (_cull[i]) Apoints.Add(new Apoint(_mesh.Vertices[i], i, _values));
             }
-
-            for (int i = 0; i < _indicies.Count; i++)
-            {
-                Apoints[_indicies[i]].Da = _values[0];
-                Apoints[_indicies[i]].Db = _values[1];
-                Apoints[_indicies[i]].F = _values[2];
-                Apoints[_indicies[i]].K = _values[3];
-            }
-
-            asize = Apoints.Count;
 
             InitAll();
-
-            int[] temp = _mesh.Vertices.GetConnectedVertices(0);
-            double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
-
-            FindNeighbours(true, distance);
+            InitNeighbours(_mesh);
         }
 
         public Asystem(List<double> _values, Mesh _mesh)
@@ -60,17 +57,12 @@ namespace Angelfish
 
                 Apoints.Add(new Apoint(_mesh.Vertices[i], _values));
             }
-            asize = Apoints.Count;
 
             InitAll();
-
-            int[] temp = _mesh.Vertices.GetConnectedVertices(0);
-            double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
-
-            FindNeighbours(true, distance);
+            InitNeighbours(_mesh);
         }
 
-        void InitAll()
+        public void InitAll()
         {
             excludeX = false;
             excludeY = false;
@@ -79,8 +71,14 @@ namespace Angelfish
             MinMax();
 
             edgeCount = CountEdge();
+        }
 
+        void InitNeighbours(Mesh _mesh)
+        {
+            int[] temp = _mesh.Vertices.GetConnectedVertices(0);
+            double distance = _mesh.Vertices[0].DistanceTo(_mesh.Vertices[temp[0]]);
 
+            FindNeighbours(true, distance);
         }
 
         void FindNeighbours(bool _byDistance, double _distance)
@@ -100,14 +98,14 @@ namespace Angelfish
         {
             RTree rTree = new RTree();
 
-            for (int i = 0; i < asize; i++)
+            for (int i = 0; i < Apoints.Count; i++)
             {
                 rTree.Insert(Apoints[i].Pos, i);
             }
 
             double searchDistance = _distance + (_distance / 2);
 
-            for (int i = 0; i < asize; i++)
+            for (int i = 0; i < Apoints.Count; i++)
             {
                 Point3d vI = Apoints[i].Pos;
                 Sphere searchSpehere = new Sphere(vI, searchDistance);
@@ -129,7 +127,7 @@ namespace Angelfish
         void ByCount(int nr)
         {
             List<Point3d> allPoints = new List<Point3d>();
-            for (int i = 0; i < asize; i++)
+            for (int i = 0; i < Apoints.Count; i++)
             {
                 allPoints.Add(Apoints[i].Pos);
             }

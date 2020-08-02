@@ -27,7 +27,7 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Asystem pattern = null;
+            Pattern pattern = null;
             DA.GetData("Pattern", ref pattern);
 
             ReadWrite writer = new ReadWrite();

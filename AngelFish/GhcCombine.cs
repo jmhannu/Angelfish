@@ -47,13 +47,13 @@ namespace Angelfish
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddMeshParameter("Mesh", "Mesh", "Mesh", GH_ParamAccess.item);
-            pManager.AddGenericParameter("A", "A", "Apoint from region, zoom to add more inputs", GH_ParamAccess.list);
+            pManager.AddGenericParameter("A", "A", "Apoint from region, zoom to add more inputs", GH_ParamAccess.item);
 
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddPointParameter("Apoints", "Apoints", "Apoints", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Asystem", "Asystem", "Asystem", GH_ParamAccess.item);
             pManager.AddColourParameter("Colours", "Colours", "Colours", GH_ParamAccess.list);
         }
 
@@ -63,27 +63,20 @@ namespace Angelfish
             Mesh mesh = null;
             DA.GetData(0, ref mesh);
 
-            DataTree<Apoint> regions = new DataTree<Apoint>();
-            List<Apoint> aux = new List<Apoint>();
+            List<Pattern> regions = new List<Pattern>();
+            Asystem aux = new Asystem();
 
             for (int i = 1; i < Params.Input.Count; i++)
             {
-                if (DA.GetDataList(i, aux))
+                if (DA.GetData(i, ref aux))
                 {
-                    regions.AddRange(aux);
+                    regions.Add(new Pattern(aux));
                 }
             }
 
             Gradient gradient = new Gradient(regions, mesh);
 
-            List<Point3d> outpoints = new List<Point3d>();
-
-            for (int i = 0; i < gradient.Apoints.Count; i++)
-            {
-                outpoints.Add(gradient.Apoints[i].Pos);
-            }
-
-            DA.SetDataList(0, outpoints);
+            DA.SetData(0, gradient);
             DA.SetDataList(1, gradient.colors);
         }
 
@@ -127,7 +120,6 @@ namespace Angelfish
             param.Name = GH_ComponentParamServer.InventUniqueNickname("BCDEFGHIJKLMNOPQRSTUVWXYZ", Params.Input);
             param.NickName = param.Name;
             param.Description = "Param" + (Params.Input.Count + 1);
-            param.Access = GH_ParamAccess.list;
             param.Optional = true;
 
             return param;
@@ -140,7 +132,11 @@ namespace Angelfish
 
         public void VariableParameterMaintenance()
         {
-           
+            for (int i = 0; i < Params.Input.Count; i++)
+            {
+                Params.Input[i].Access = GH_ParamAccess.item;
+
+            }
         }
 
         #endregion

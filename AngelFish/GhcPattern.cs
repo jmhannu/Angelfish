@@ -31,7 +31,7 @@ namespace Angelfish
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            ReactionDiffusion reactDiffuse = null;
+            Pattern reactDiffuse = null;
             DA.GetData("RD", ref reactDiffuse);
 
             double treshold = 0.0;
@@ -47,28 +47,28 @@ namespace Angelfish
             if (solidPattern)
             {
                 List<int> solids = new List<int>(reactDiffuse.Solid);
-                reactDiffuse.Asystem.Pattern = new List<int>(solids);
+                reactDiffuse.InPattern = new List<int>(solids);
 
                 for (int i = 0; i < solids.Count; i++)
                 {
-                    reactDiffuse.Asystem.Apoints[solids[i]].InPattern = true;
-                    outputPoints.Add(reactDiffuse.Asystem.Apoints[solids[i]].Pos);
+                    reactDiffuse.Apoints[solids[i]].InPattern = true;
+                    outputPoints.Add(reactDiffuse.Apoints[solids[i]].Pos);
                 }
             }
 
             else
             {
                 List<int> voids = new List<int>(reactDiffuse.Void);
-                reactDiffuse.Asystem.Pattern = new List<int>(voids);
+                reactDiffuse.InPattern = new List<int>(voids);
 
                 for (int i = 0; i < voids.Count; i++)
                 {
-                    reactDiffuse.Asystem.Apoints[voids[i]].InPattern = true;
-                    outputPoints.Add(reactDiffuse.Asystem.Apoints[voids[i]].Pos);
+                    reactDiffuse.Apoints[voids[i]].InPattern = true;
+                    outputPoints.Add(reactDiffuse.Apoints[voids[i]].Pos);
                 }
             }
 
-            DA.SetData(0, reactDiffuse.Asystem);
+            DA.SetData(0, reactDiffuse);
             DA.SetDataList(1, outputPoints);
         }
 

@@ -230,11 +230,11 @@ namespace Angelfish
             return read;
         }
 
-        public string WritePattern(Asystem _pattern)
+        public string WritePattern(Pattern _pattern)
         {
             string toWrite = null;
 
-            for (int i = 0; i < _pattern.asize; i++)
+            for (int i = 0; i < _pattern.Apoints.Count; i++)
             {
                 if (i != 0) toWrite += '\t';
                 if (_pattern.Apoints[i].InPattern) toWrite += "1";

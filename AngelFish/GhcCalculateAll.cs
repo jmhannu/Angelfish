@@ -8,13 +8,13 @@ using Rhino.Geometry;
 
 namespace Angelfish
 {
-    public class GhcCalculateRD : GH_Component
+    public class GhcCalculateAll : GH_Component
     {
         int currentI;
-        ReactionDiffusion reactDiffuse;
+        Pattern reactDiffuse;
 
-        public GhcCalculateRD()
-          : base("Calculate RD", "Calcuate RD",
+        public GhcCalculateAll()
+          : base("Calculate all", "All",
               "Calulates the Grey Scott Reaction Diffusion pattern on a set of points or vertices",
               "Angelfish", "2.Calculate")
         {
@@ -48,7 +48,7 @@ namespace Angelfish
 
             Asystem angelfish = null;
             DA.GetData("Angelfish", ref angelfish);
-            reactDiffuse = new ReactionDiffusion(angelfish);
+            reactDiffuse = new Pattern(angelfish);
 
 
             while (currentI < iterations)

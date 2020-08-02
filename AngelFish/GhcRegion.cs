@@ -24,7 +24,7 @@ namespace Angelfish
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Region", "Region", "Region", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Region", "Region", "Region", GH_ParamAccess.item);
             pManager.AddPointParameter("Points", "Points", "Points", GH_ParamAccess.list);
             pManager.AddIntegerParameter("Indicies", "Indicies", "Indicies", GH_ParamAccess.list);
         }
@@ -42,24 +42,18 @@ namespace Angelfish
             List<double> values = new List<double>();
             DA.GetDataList(2, values);
 
-
-            List<Apoint> apoints = new List<Apoint>();
-
-            for (int i = 0; i < mesh.Vertices.Count; i++)
-            {
-                if(cullPattern[i]) apoints.Add(new Apoint(mesh.Vertices[i], i, values));
-            }
-
+            Asystem asystem = new Asystem(values, mesh, cullPattern);
+           
             List<Point3d> output = new List<Point3d>();
             List<int> indicies = new List<int>();
                 
-            for (int i = 0; i < apoints.Count; i++)
+            for (int i = 0; i < asystem.Apoints.Count; i++)
             {
-                output.Add(apoints[i].Pos);
-                indicies.Add(apoints[i].Index);
+                output.Add(asystem.Apoints[i].Pos);
+                indicies.Add(asystem.Apoints[i].Index);
             }
 
-            DA.SetDataList(0, apoints);
+            DA.SetData(0, asystem);
             DA.SetDataList(1, output);
             DA.SetDataList(2, indicies);
         }

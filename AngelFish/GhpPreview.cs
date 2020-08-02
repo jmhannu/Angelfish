@@ -9,9 +9,6 @@ namespace Angelfish
 {
     public class GhpPreview : GH_Param<GH_Number>
     {
-        bool readPattern; 
-        List<int> pattern;
-
         public GhpPreview()
           : base("Preview Pattern", "Preview",
               "Preview Pattern",
@@ -20,11 +17,8 @@ namespace Angelfish
         }
 
         protected override void OnVolatileDataCollected()
-
         {
-           // pattern = VolatileData.Paths;
         }
-
 
         public override Guid ComponentGuid
         {

@@ -54,7 +54,7 @@ namespace Angelfish
 
             string name = writer.Embedd(varibles, massP, connectivityP, solidEdgeP);
 
-            Asystem pattern = null;
+            Pattern pattern = null;
             DA.GetData(4, ref pattern);
 
             string path = "C:/Users/julia/OneDrive/Dokument/GitHub/Angelfish/Angelfish/Resources/" + name + ".txt";
