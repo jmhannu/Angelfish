@@ -63,6 +63,7 @@
     <Compile Include="GhcCombine.cs" />
     <Compile Include="GhcColourGradient.cs" />
     <Compile Include="GhcEmbedded2d.cs" />
+    <Compile Include="GhcInterpolate.cs" />
     <Compile Include="GhcMeasure.cs" />
     <Compile Include="GhcPattern.cs" />
     <Compile Include="GhcPatternToPreview.cs" />

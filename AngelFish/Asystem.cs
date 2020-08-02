@@ -55,7 +55,7 @@ namespace Angelfish
             for (int i = 0; i < _mesh.Vertices.Count; i++)
             {
 
-                Apoints.Add(new Apoint(_mesh.Vertices[i], _values));
+                Apoints.Add(new Apoint(_mesh.Vertices[i], i, _values));
             }
 
             InitAll();

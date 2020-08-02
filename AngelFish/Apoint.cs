@@ -24,22 +24,37 @@ namespace Angelfish
         public List<int> SecoundNeighbours { get; set; }
         public List<double> Weights { get; set; }
 
-        public  Apoint(Point3d _point, List<double> _values)
+        public Apoint()
         {
-            Pos = _point;
-
-            Da = _values[0];
-            Db = _values[1];
-            F = _values[2];
-            K = _values[3];
+            Da = 0.0;
+            Db = 0.0;
+            F = 0.0;
+            K = 0.0;
             InPattern = false;
 
-            Index = 0; 
+            Index = -1;
 
             Neighbours = new List<int>();
             SecoundNeighbours = new List<int>();
             Weights = new List<double>();
         }
+
+        //public  Apoint(Point3d _point, List<double> _values)
+        //{
+        //    Pos = _point;
+
+        //    Da = _values[0];
+        //    Db = _values[1];
+        //    F = _values[2];
+        //    K = _values[3];
+        //    InPattern = false;
+
+        //    Index = -1;
+
+        //    Neighbours = new List<int>();
+        //    SecoundNeighbours = new List<int>();
+        //    Weights = new List<double>();
+        //}
 
         public Apoint(Point3d _point, int _index, List<double> _values)
         {
@@ -58,7 +73,7 @@ namespace Angelfish
             Weights = new List<double>();
         }
 
-        public Apoint(Point3d _point)
+        public Apoint(Point3d _point, int _index)
         {
             Pos = _point;
 
@@ -68,7 +83,7 @@ namespace Angelfish
             K = 0.0;
             InPattern = false;
 
-            Index = 0; 
+            Index = _index;
 
             Neighbours = new List<int>();
             SecoundNeighbours = new List<int>();

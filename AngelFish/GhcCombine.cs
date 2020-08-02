@@ -53,7 +53,7 @@ namespace Angelfish
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Asystem", "Asystem", "Asystem", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Gradient", "Gradient", "Gradient", GH_ParamAccess.item);
             pManager.AddColourParameter("Colours", "Colours", "Colours", GH_ParamAccess.list);
         }
 
