@@ -16,6 +16,10 @@ namespace Angelfish
         public List<Point3d> pointsInHull;
         public List<Point3d> pointsInbetween;
         public GH_Structure<GH_Point> matches;
+        public Point3d[] midpoints;
+        public List<Line> pairings;
+        List<bool> inHull; 
+
 
         public Gradient(List<Pattern> _regions, Mesh _mesh)
         {
@@ -60,15 +64,12 @@ namespace Angelfish
                                                                                                              //end.X + (pt-end).Y   * (start-end).X  /(start-end).Y   <   pt.X
             }
 
-
             if (!oddNodes)
             {
                 double minDist = 1e10;
                 for (int i = 0; i < crv.SegmentCount; i++)
                 {
                     Point3d cp = crv.SegmentAt(i).ClosestPoint(pt, true);
-                    //Point3d cp = mvContour[i].closestPoint(pt);
-                    //minDist = min(minDist, cp.distance(pt));
                     minDist = Math.Min(minDist, cp.DistanceTo(pt));
                 }
                 if (minDist < 1e-10)
@@ -80,17 +81,34 @@ namespace Angelfish
             return false;
         }
 
-        public void InHull(Polyline _hull)
+        Point3d GetCentroid(List<Apoint> _apoints)
         {
-            int pathnr = 0;
-            List<bool> inHull = new List<bool>();
+            double[] centroid = new double[3];
+
+            foreach (Apoint point in _apoints)
+            {
+                centroid[0] += point.Pos.X;
+                centroid[1] += point.Pos.Y;
+                centroid[2] += point.Pos.Z;
+            }
+
+            centroid[0] /= _apoints.Count;
+            centroid[1] /= _apoints.Count;
+            centroid[2] /= _apoints.Count;
+
+            return new Point3d(centroid[0], centroid[1], centroid[2]);
+        }
+
+        List<bool> CheckHull(Polyline _hull)
+        {
+            inHull = new List<bool>();
             pointsInbetween = new List<Point3d>();
             pointsInHull = new List<Point3d>();
             matches = new GH_Structure<GH_Point>();
 
             for (int i = 0; i < Apoints.Count; i++)
             {
-                if (IsInside(Apoints[i].Pos, _hull))
+                if (IsInside(Apoints[i].Pos, _hull) && !inRegion[i])
                 {
                     inHull.Add(true);
                     pointsInHull.Add(Apoints[i].Pos);
@@ -98,58 +116,121 @@ namespace Angelfish
                 else inHull.Add(false);
             }
 
-            for (int i = 0; i < Apoints.Count; i++)
+            return inHull;
+        }
+
+        void CheckPoints(int _i, int _j, List<bool> _inHull, List<int> _regionCounts, int _counter)
+        {
+            double minDistance = double.MaxValue;
+            int index1 = -1;
+            int index2 = -1;
+
+            for (int k = 0; k < regions[_i].Apoints.Count; k++)
             {
-                if (inHull[i] && !inRegion[i])
+                if (!regions[_i].Apoints[k].Burned)
                 {
-                    pointsInbetween.Add(Apoints[i].Pos);
-                    if (regions.Count > 1)
+                    for (int m = 0; m < regions[_j].Apoints.Count; m++)
                     {
-                        List<Tuple<double, int>> distIndex = new List<Tuple<double, int>>();
-
-                        for (int j = 0; j < regions.Count; j++)
+                        if (!regions[_j].Apoints[m].Burned)
                         {
-                            double smallDistance = double.MaxValue;
-                            int smallIndex = -1;
-
-                            for (int k = 0; k < regions[j].Apoints.Count; k++)
+                            double thisDistance = regions[_i].Apoints[k].Pos.DistanceTo(regions[_j].Apoints[m].Pos);
+                            if (thisDistance < minDistance)
                             {
-                                double thisDistance = Apoints[i].Pos.DistanceTo(regions[j].Apoints[k].Pos);
-                                if (thisDistance < smallDistance)
-                                {
-                                    smallIndex = regions[j].Apoints[k].Index;
-                                    smallDistance = thisDistance;
-                                }
+                                minDistance = thisDistance;
+                                index1 = k;
+                                index2 = m; 
                             }
-
-                            distIndex.Add(new Tuple<double, int>(smallDistance, smallIndex));
                         }
-
-                        //distIndex = distIndex.OrderByDescending(t => t.Item2).ToList();
-                        //list.Sort((x, y) => y.Item1.CompareTo(x.Item1));
-
-                        //int index1 = distIndex[0].Item2;
-                        //int index2 = distIndex[1].Item2;
-
-                        List<GH_Point> branch = new List<GH_Point>();
-
-                        for (int j = 0; j < distIndex.Count; j++)
-                        {
-                            branch.Add(new GH_Point(Apoints[distIndex[j].Item2].Pos));
-                        }
-
-                        //Apoint point1 = Apoints[index1];
-                        //Apoint point2 = Apoints[index2];
-
-                        branch.Add(new GH_Point(Apoints[i].Pos));
-                        //branch.Add(new GH_Point(Apoints[index1].Pos));
-                        //branch.Add(new GH_Point(Apoints[index2].Pos));
-                        GH_Path path = new GH_Path(pathnr);
-                        matches.AppendRange(branch, path);
-                        pathnr++;
                     }
                 }
             }
+
+            if(index1 != -1 && index2 != -1)
+            {
+                regions[_i].Apoints[index1].Burned = true;
+                regions[_j].Apoints[index2].Burned = true;
+
+                Line newLine = new Line(regions[_i].Apoints[index1].Pos, regions[_j].Apoints[index2].Pos);
+                pairings.Add(newLine);
+
+                _regionCounts[_i] = _regionCounts[_i] - 1;
+                _regionCounts[_j] = _regionCounts[_j] - 1;
+
+                for (int i = 0; i < _inHull.Count; i++)
+                {
+                    double threshold = 0.1;
+                    if (newLine.DistanceTo(Apoints[i].Pos, true) < threshold)
+                    {
+
+                        _counter = _counter - 1;
+                    }
+                }
+            }
+        }
+
+        double fraction(float _pointDim, double max, double min)
+        {
+            return (_pointDim - min) / (max - min);
+        }
+
+
+        double Lerp(float p1, float p2, float fraction)
+        {
+            //fraction : value between 0 and 1 
+            return p1 + (p2 - p1) * fraction;
+        }
+
+        public void InHull(Polyline _hull)
+        {
+            List<bool> inHull = CheckHull(_hull);
+            int counter = inHull.Count;
+            pairings = new List<Line>();
+
+            int nrRegions = regions.Count;
+            List<int> regionCounts = new List<int>();
+
+            for (int i = 0; i < nrRegions; i++)
+            {
+                regionCounts.Add(regions[i].Apoints.Count);
+            }
+
+            bool stop = false; 
+
+            while(counter > 0 || stop)
+            {
+                for (int i = 0; i < nrRegions; i++)
+                {
+                    for (int j = 0; j < nrRegions; j++)
+                    {
+                        if (i != j)
+                        {
+                            CheckPoints(i, j, inHull, regionCounts, counter);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < regionCounts.Count; i++)
+                {
+                    if (regionCounts[i] < 1)
+                    {
+                        for (int j = 0; j < inHull.Count; j++)
+                        {
+                            double smallest = double.MaxValue;
+                            int index = -1; 
+
+                            for (int k = 0; k < pairings.Count; k++)
+                            {
+                            //   pairings[k].DistanceTo()
+                            }
+                        }
+                        goto out1;
+                    }
+                }
+            }
+
+        out1:
+            ;
+
         }
     }
 }

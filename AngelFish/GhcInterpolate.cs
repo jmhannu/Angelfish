@@ -24,8 +24,10 @@ namespace Angelfish
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Angelfish", "Angelfish", "Angelfish", GH_ParamAccess.item);
-            //   pManager.AddPointParameter("InHull", "InHull", "InHull", GH_ParamAccess.list);
-            pManager.AddPointParameter("Matches", "Matches", "Matches", GH_ParamAccess.tree);
+               pManager.AddPointParameter("InHull", "InHull", "InHull", GH_ParamAccess.list);
+             pManager.AddPointParameter("Regions", "Regions", "Regions", GH_ParamAccess.list);
+            //pManager.AddPointParameter("Midpoints", "Midpoints", "Midpoints", GH_ParamAccess.list);
+            pManager.AddLineParameter("Pairs", "Pairs", "Pairs", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -41,8 +43,10 @@ namespace Angelfish
 
             gradient.InHull(hull);
 
-            //DA.SetDataList(1, gradient.pointsInbetween);
-            DA.SetDataTree(1, gradient.matches);
+            DA.SetDataList(1, gradient.pointsInbetween);
+            // DA.SetDataTree(1, gradient.matches);
+             DA.SetDataList(2, gradient.pointsInHull);
+            DA.SetDataList(3, gradient.pairings);
         }
 
         /// <summary>
