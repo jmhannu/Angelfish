@@ -20,6 +20,8 @@ namespace Angelfish
         protected bool excludeY;
         protected bool excludeZ;
 
+        public Mesh mesh;
+
         public Asystem()
         {
         }
@@ -38,6 +40,7 @@ namespace Angelfish
         public Asystem(List<double> _values, Mesh _mesh, List<bool> _cull)
         {
             Apoints = new List<Apoint>();
+            mesh = _mesh; 
 
             for (int i = 0; i < _mesh.Vertices.Count; i++)
             {
@@ -60,6 +63,7 @@ namespace Angelfish
 
             InitAll();
             InitNeighbours(_mesh);
+            mesh = _mesh;
         }
 
         public void InitAll()

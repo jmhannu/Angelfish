@@ -1,24 +1,27 @@
 ﻿using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Geometry.Delaunay;
 using Grasshopper.Kernel.Types;
+using Rhino.Geometry.Collections; 
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using Grasshopper;
 
 namespace Angelfish
 {
     public class Gradient : Pattern
-    {
+    { 
         public List<Color> colors;
         public List<Pattern> regions;
         public List<bool> inRegion;
         public List<Point3d> pointsInHull;
         public List<Point3d> pointsInbetween;
         public GH_Structure<GH_Point> matches;
-        public Point3d[] midpoints;
         public List<Line> pairings;
-        List<bool> inHull; 
+        List<bool> inHull;
 
 
         public Gradient(List<Pattern> _regions, Mesh _mesh)
@@ -35,6 +38,8 @@ namespace Angelfish
                 inRegion.Add(false);
             }
 
+            mesh = _mesh;
+
             for (int i = 0; i < regions.Count; i++)
             {
                 for (int j = 0; j < regions[i].Apoints.Count; j++)
@@ -46,6 +51,8 @@ namespace Angelfish
             }
 
             InitAll();
+
+            
         }
 
         bool IsInside(Point3d pt, Polyline crv)
@@ -83,7 +90,9 @@ namespace Angelfish
 
         Point3d GetCentroid(List<Apoint> _apoints)
         {
-            double[] centroid = new double[3];
+            int cordinates = 3; 
+
+            double[] centroid = new double[cordinates];
 
             foreach (Apoint point in _apoints)
             {
@@ -92,9 +101,10 @@ namespace Angelfish
                 centroid[2] += point.Pos.Z;
             }
 
-            centroid[0] /= _apoints.Count;
-            centroid[1] /= _apoints.Count;
-            centroid[2] /= _apoints.Count;
+            for (int i = 0; i < cordinates; i++)
+            {
+                centroid[i] /= _apoints.Count;
+            }
 
             return new Point3d(centroid[0], centroid[1], centroid[2]);
         }
@@ -138,14 +148,14 @@ namespace Angelfish
                             {
                                 minDistance = thisDistance;
                                 index1 = k;
-                                index2 = m; 
+                                index2 = m;
                             }
                         }
                     }
                 }
             }
 
-            if(index1 != -1 && index2 != -1)
+            if (index1 != -1 && index2 != -1)
             {
                 regions[_i].Apoints[index1].Burned = true;
                 regions[_j].Apoints[index2].Burned = true;
@@ -168,7 +178,7 @@ namespace Angelfish
             }
         }
 
-        double fraction(float _pointDim, double max, double min)
+        double Fraction(float _pointDim, double max, double min)
         {
             return (_pointDim - min) / (max - min);
         }
@@ -180,11 +190,114 @@ namespace Angelfish
             return p1 + (p2 - p1) * fraction;
         }
 
-        public void InHull(Polyline _hull)
+        Vector3d Direction(Point3d start, Point3d stop)
+        {
+            Vector3d newVector = new Vector3d(stop - start);
+            newVector.Unitize();
+            return newVector;
+        }
+
+        List<KeyValuePair<string, Vector3d>> Directions (int _nrRegions, List<Point3d> _midpoints)
+        {
+            List<KeyValuePair<string, Vector3d>> directions = new List<KeyValuePair<string, Vector3d>>();
+
+            for (int i = 0; i < _nrRegions; i++)
+            {
+                for (int j = 0; j < _nrRegions; j++)
+                {
+                    if (i != j)
+                    {
+                        string key = i.ToString() + ">" + j.ToString();
+
+                        Vector3d direction = Direction(_midpoints[i], _midpoints[j]);
+                        directions.Add(new KeyValuePair<string, Vector3d>(key, direction));
+                    }
+                }
+            }
+
+            return directions;
+        }
+
+        void AddEdges(bool _solid)
+        {
+            bool[] external = mesh.GetNakedEdgePointStatus();
+            Polyline[] array = mesh.GetNakedEdges();
+            List<Polyline> externalEdges = array.ToList(); 
+            List<Apoint>[] edgeRegions = new List<Apoint>[externalEdges.Count];
+
+            for (int i = 0; i < externalEdges.Count; i++)
+            {
+                edgeRegions[i] = new List<Apoint>();
+            }
+
+            List<Apoint> edgePoints = new List<Apoint>();
+
+            for (int i = 0; i < mesh.Vertices.Count; i++)
+            {
+                if (external[i])
+                {
+                    edgePoints.Add(Apoints[i]);
+                }
+            }
+
+            //for (int i = 0; i < externalEdges.Count; i++)
+            //{
+            //    if(!externalEdges[i].IsClosed)
+            //    {
+            //        Polyline[] newLines = externalEdges[i].BreakAtAngles(Math.PI / 6);
+            //        externalEdges.RemoveAt(i);
+            //        externalEdges.AddRange(newLines);
+            //    }
+            //}
+
+            for (int i = 0; i < edgePoints.Count; i++)
+            {
+                double smallest = double.MaxValue;
+                int index = -1; 
+
+                for (int j = 0; j < edgePoints.Count; j++)
+                {
+                    for (int k = 0; k < externalEdges[j].SegmentCount; k++)
+                    {
+                        double distance = externalEdges[j].SegmentAt(k).DistanceTo(edgePoints[i].Pos, true);
+
+                        if(distance<smallest)
+                        {
+                            smallest = distance;
+                            index = j;
+                        }
+                    }
+                }
+
+                if (_solid)
+                {
+                    //edgePoints[i].Da = ;
+                    //    edgePoints[i].Db = ;
+                    //edgePoints[i].Db
+                    //    edgePoints[i].Db
+                }
+
+                else
+                {
+
+                }
+
+                edgeRegions[index].Add(edgePoints[i]);
+            }
+
+            for (int i = 0; i < edgeRegions.Length; i++)
+            {
+                Pattern newRegion = new Pattern(edgeRegions[i]);
+                regions.Add(newRegion);
+            }
+        }
+
+        public void InHull(Polyline _hull, bool _solid) 
         {
             List<bool> inHull = CheckHull(_hull);
             int counter = inHull.Count;
             pairings = new List<Line>();
+            List<Point3d> midpoints = new List<Point3d>();
 
             int nrRegions = regions.Count;
             List<int> regionCounts = new List<int>();
@@ -192,11 +305,20 @@ namespace Angelfish
             for (int i = 0; i < nrRegions; i++)
             {
                 regionCounts.Add(regions[i].Apoints.Count);
+                midpoints.Add(GetCentroid(regions[i].Apoints));
             }
 
-            bool stop = false; 
+            List<KeyValuePair<string, Vector3d>> directions = Directions(nrRegions, midpoints);
 
-            while(counter > 0 || stop)
+            if (!mesh.IsClosed)
+            {
+                AddEdges(_solid);
+            }
+
+            nrRegions = regionCounts.Count;
+            bool stop = false;
+
+            while (counter > 0 || stop)
             {
                 for (int i = 0; i < nrRegions; i++)
                 {
@@ -216,11 +338,11 @@ namespace Angelfish
                         for (int j = 0; j < inHull.Count; j++)
                         {
                             double smallest = double.MaxValue;
-                            int index = -1; 
+                            int index = -1;
 
                             for (int k = 0; k < pairings.Count; k++)
                             {
-                            //   pairings[k].DistanceTo()
+                                //   pairings[k].DistanceTo()
                             }
                         }
                         goto out1;

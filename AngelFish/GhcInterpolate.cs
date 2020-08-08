@@ -19,6 +19,7 @@ namespace Angelfish
         {
             pManager.AddGenericParameter("Gradient", "Gradient", "Gradient", GH_ParamAccess.item);
             pManager.AddCurveParameter("Convex Hull", "Convex Hull", "Convex Hull", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Solid edge", "Solid edge", "Solid edge", GH_ParamAccess.item, true);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -28,6 +29,7 @@ namespace Angelfish
              pManager.AddPointParameter("Regions", "Regions", "Regions", GH_ParamAccess.list);
             //pManager.AddPointParameter("Midpoints", "Midpoints", "Midpoints", GH_ParamAccess.list);
             pManager.AddLineParameter("Pairs", "Pairs", "Pairs", GH_ParamAccess.list);
+        //    pManager.AddPointParameter("Edge points", "Edge points", "Edge points", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -41,12 +43,16 @@ namespace Angelfish
             Polyline hull = null; 
             temp.TryGetPolyline(out hull);
 
-            gradient.InHull(hull);
+            Boolean solid = true;
+            DA.GetData(2, ref solid);
+
+            gradient.InHull(hull, solid);
 
             DA.SetDataList(1, gradient.pointsInbetween);
             // DA.SetDataTree(1, gradient.matches);
              DA.SetDataList(2, gradient.pointsInHull);
             DA.SetDataList(3, gradient.pairings);
+         //   DA.SetDataList(4, gradient.externalPoints);
         }
 
         /// <summary>
