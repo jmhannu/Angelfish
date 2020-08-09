@@ -6,6 +6,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Utility;
 using Rhino.Geometry;
+using Rhino.Geometry.Collections;
 
 namespace Angelfish
 {
@@ -40,15 +41,31 @@ namespace Angelfish
         public Asystem(List<double> _values, Mesh _mesh, List<bool> _cull)
         {
             Apoints = new List<Apoint>();
-            mesh = _mesh; 
+            mesh = _mesh;
 
             for (int i = 0; i < _mesh.Vertices.Count; i++)
             {
-                if (_cull[i]) Apoints.Add(new Apoint(_mesh.Vertices[i], i, _values));
+                if (_cull[i])
+                {
+                    Apoints.Add(new Apoint(_mesh.Vertices[i], i, _values));
+                }
             }
 
             InitAll();
             InitNeighbours(_mesh);
+
+            MeshTopologyVertexList all = _mesh.TopologyVertices;
+            for (int i = 0; i < Apoints.Count; i++)
+            {
+                int[] connected = all.ConnectedTopologyVertices(Apoints[i].Index);
+                for (int j = 0; j < connected.Length; j++)
+                {
+                    if(!_cull[connected[j]])
+                    {
+                        Apoints[i].EdgePoint = true; 
+                    }
+                }
+            }
         }
 
         public Asystem(List<double> _values, Mesh _mesh)
@@ -122,8 +139,15 @@ namespace Angelfish
 
                 for (int j = 0; j < near.Count; j++)
                 {
-                    if (vI.DistanceTo(Apoints[near[j]].Pos) <= _distance + (_distance * 0.1)) Apoints[i].Neighbours.Add(near[j]);
-                    else Apoints[i].SecoundNeighbours.Add(near[j]);
+                    if (vI.DistanceTo(Apoints[near[j]].Pos) <= _distance + (_distance * 0.1))
+                    {
+                        Apoints[i].Neighbours.Add(near[j]);
+                    }
+
+                    else
+                    {
+                        Apoints[i].SecoundNeighbours.Add(near[j]);
+                    }
                 }
             }
         }

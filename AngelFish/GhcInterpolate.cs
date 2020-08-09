@@ -29,7 +29,8 @@ namespace Angelfish
              pManager.AddPointParameter("Regions", "Regions", "Regions", GH_ParamAccess.list);
             //pManager.AddPointParameter("Midpoints", "Midpoints", "Midpoints", GH_ParamAccess.list);
             pManager.AddLineParameter("Pairs", "Pairs", "Pairs", GH_ParamAccess.list);
-        //    pManager.AddPointParameter("Edge points", "Edge points", "Edge points", GH_ParamAccess.list);
+            pManager.AddPointParameter("Edge points", "Edge points", "Edge points", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("InHull", "InHull", "InHull", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -50,9 +51,10 @@ namespace Angelfish
 
             DA.SetDataList(1, gradient.pointsInbetween);
             // DA.SetDataTree(1, gradient.matches);
-             DA.SetDataList(2, gradient.pointsInHull);
+         //    DA.SetDataList(2, gradient.pointsInHull);
             DA.SetDataList(3, gradient.pairings);
-         //   DA.SetDataList(4, gradient.externalPoints);
+            DA.SetDataList(4, gradient.pointsOnEdge);
+            DA.SetDataList(5, gradient.pinHull);
         }
 
         /// <summary>

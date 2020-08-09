@@ -13,6 +13,7 @@ namespace Angelfish
         public int Index;
         public bool Burned;
         public Color Color; 
+        public int regionIndex; 
 
         public double Da { get; set; }
         public double Db { get; set; }
@@ -20,7 +21,8 @@ namespace Angelfish
         public double F { get; set; }
 
         public bool InPattern;
-        
+
+        public bool EdgePoint; 
 
         public List<int> Neighbours { get; set; }
         public List<int> SecoundNeighbours { get; set; }
@@ -37,8 +39,9 @@ namespace Angelfish
             Burned = false; 
 
             Index = -1;
-
+            regionIndex = -1; 
             Neighbours = new List<int>();
+            EdgePoint = false; 
             SecoundNeighbours = new List<int>();
             Weights = new List<double>();
         }
@@ -54,9 +57,9 @@ namespace Angelfish
             K = _values[3];
             InPattern = false;
             Burned = false;
-
+            regionIndex = -1;
             Index = _index;
-
+            EdgePoint = false;
             Neighbours = new List<int>();
             SecoundNeighbours = new List<int>();
             Weights = new List<double>();
@@ -72,9 +75,9 @@ namespace Angelfish
             K = 0.0;
             InPattern = false;
             Burned = false;
-
+            EdgePoint = false;
             Index = _index;
-
+            regionIndex = -1;
             Neighbours = new List<int>();
             SecoundNeighbours = new List<int>();
             Weights = new List<double>();

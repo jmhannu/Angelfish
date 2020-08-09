@@ -59,7 +59,7 @@ namespace Angelfish
             rdSize = Apoints.Count;
 
             Setup();
-            Start();
+            if(rdSize != 0) Start();
         }
 
         private void Setup()
