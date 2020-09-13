@@ -17,17 +17,15 @@ namespace Angelfish
     public class Gradient : Pattern
     {
         public List<Color> colors;
-        public List<Pattern> regions;
+        public List<Region> regions;
         public List<bool> inRegion;
-        public List<bool> pinHull;
         public List<Point3d> pointsInHull;
         public List<Point3d> pointsInbetween;
-        public GH_Structure<GH_Point> matches;
         public List<Line> pairings;
         public List<Point3d> pointsOnEdge;
+        public List<Polyline> regionHulls;
 
-
-        public Gradient(List<Pattern> _regions, Mesh _mesh)
+        public Gradient(List<Region> _regions, Mesh _mesh)
         {
             colors = new List<Color>();
             regions = _regions;
@@ -54,8 +52,6 @@ namespace Angelfish
             }
 
             InitAll();
-
-
         }
 
         bool IsInside(Point3d pt, Polyline crv)
@@ -119,7 +115,6 @@ namespace Angelfish
             pointsOnEdge = new List<Point3d>();
             List<bool> inHull = new List<bool>();
             pointsInHull = new List<Point3d>();
-            matches = new GH_Structure<GH_Point>();
 
             for (int i = 0; i < Apoints.Count; i++)
             {
@@ -130,8 +125,6 @@ namespace Angelfish
                 }
 
                 else inHull.Add(false);
-
-
             }
 
             return inHull;
@@ -194,14 +187,11 @@ namespace Angelfish
 
         double Lerp(float p1, float p2, float fraction)
         {
-            //fraction : value between 0 and 1 
             return p1 + (p2 - p1) * fraction;
         }
 
         Vector3d Direction(Point3d start, Point3d stop)
         {
-            //Line pair = new Line(start, stop);
-            //pairings.Add(pair);
             Vector3d newVector = new Vector3d(stop - start);
             newVector.Unitize();
             return newVector;
@@ -258,8 +248,6 @@ namespace Angelfish
                 }
             }
 
-
-
             for (int i = 0; i < edgePoints.Count; i++)
             {
                 double smallest = double.MaxValue;
@@ -297,7 +285,7 @@ namespace Angelfish
 
             for (int i = 0; i < edgeRegions.Length; i++)
             {
-                Pattern newRegion = new Pattern(edgeRegions[i]);
+                Region newRegion = new Region(edgeRegions[i]);
                 regions.Add(newRegion);
             }
         }
@@ -305,53 +293,73 @@ namespace Angelfish
         public void InHull(Polyline _hull, bool _solid)
         {
             List<bool> inHull = CheckHull(_hull);
-            pinHull = inHull;
             int counter = inHull.Count;
             pairings = new List<Line>();
             List<Point3d> midpoints = new List<Point3d>();
-
-            if (!mesh.IsClosed)
-            {
-                AddEdges(_solid);
-            }
-
-            int nrRegions = regions.Count;
             List<int> regionCounts = new List<int>();
+             regionHulls = new List<Polyline>();
 
-            for (int i = 0; i < nrRegions; i++)
+            for (int i = 0; i < regions.Count; i++)
             {
                 regionCounts.Add(regions[i].Apoints.Count);
                 midpoints.Add(GetCentroid(regions[i].Apoints, i));
+
+                List<Point3d> forHull = new List<Point3d>();
+
+                for (int j = 0; j < regions[i].Apoints.Count; j++)
+                {
+                    if (regions[i].Apoints[i].EdgePoint)
+                    {
+                        forHull.Add(regions[i].Apoints[i].Pos);
+                    }
+                }
+
+                regionHulls.Add(new Polyline(forHull));
             }
 
             pointsInbetween = new List<Point3d>();
             pointsInbetween = midpoints;
+            
+            List<Apoint> edgeApoints = new List<Apoint>();
+            MeshTopologyVertexList connected = mesh.TopologyVertices; 
 
-            List<Apoint> edgeI = new List<Apoint>();
             for (int i = 0; i < Apoints.Count; i++)
             {
                 if (Apoints[i].EdgePoint)
                 {
-                    pointsOnEdge.Add(Apoints[i].Pos);
-                    edgeI.Add(Apoints[i]);
+                    bool inside = false;
+
+
+
+                    int[] neighbours = connected.ConnectedTopologyVertices(i);
+
+                    for (int j = 0; j < neighbours.Length; j++)
+                    {
+                        if (inHull[neighbours[j]]) inside = true; 
+                    }
+
+                    if(inside)
+                    {
+                        pointsOnEdge.Add(Apoints[i].Pos);
+                        edgeApoints.Add(Apoints[i]);
+                    }
                 }
             }
 
-            Dictionary<string, Vector3d> directions = Directions(nrRegions, midpoints);
+            Dictionary<string, Vector3d> directions = Directions(regions.Count, midpoints);
 
-
-            for (int i = 0; i < edgeI.Count; i++)
+            for (int i = 0; i < edgeApoints.Count; i++)
             {
                 double distance = double.MaxValue;
                 int region = -1;
 
                 for (int j = 0; j < regions.Count; j++)
                 {
-                    if (edgeI[i].regionIndex != j)
+                    if (edgeApoints[i].regionIndex != j)
                     {
                         for (int k = 0; k < regions[j].Apoints.Count; k++)
                         {
-                            double thisdist = edgeI[i].Pos.DistanceTo(regions[j].Apoints[k].Pos);
+                            double thisdist = edgeApoints[i].Pos.DistanceTo(regions[j].Apoints[k].Pos);
 
                             if (thisdist < distance)
                             {
@@ -362,14 +370,19 @@ namespace Angelfish
                     }
                 }
 
-                string key = edgeI[i].regionIndex.ToString() + ">" + region.ToString();
+                string key = edgeApoints[i].regionIndex.ToString() + ">" + region.ToString();
                 Vector3d v = directions[key];
 
                 Point3d pointResult = new Point3d();
-                pointResult = Point3d.Add(edgeI[i].Pos, v);
+                pointResult = Point3d.Add(edgeApoints[i].Pos, v);
 
-                pairings.Add(new Line(edgeI[i].Pos, pointResult));
+                pairings.Add(new Line(edgeApoints[i].Pos, pointResult));
             }
+
+            //if (!mesh.IsClosed)
+            //{
+            //    AddEdges(_solid);
+            //}
 
             //for (int i = 0; i < _hull.SegmentCount; i++)
             //{
@@ -383,15 +396,13 @@ namespace Angelfish
             //    }
             //}
 
-
-            nrRegions = regionCounts.Count;
             bool stop = false;
 
             while (counter > 0 || stop)
             {
-                for (int i = 0; i < nrRegions; i++)
+                for (int i = 0; i < regions.Count; i++)
                 {
-                    for (int j = 0; j < nrRegions; j++)
+                    for (int j = 0; j < regions.Count; j++)
                     {
                         if (i != j)
                         {

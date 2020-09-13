@@ -31,6 +31,7 @@ namespace Angelfish
             pManager.AddLineParameter("Pairs", "Pairs", "Pairs", GH_ParamAccess.list);
             pManager.AddPointParameter("Edge points", "Edge points", "Edge points", GH_ParamAccess.list);
             pManager.AddBooleanParameter("InHull", "InHull", "InHull", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Hulls", "Hulls", "Hulls", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -54,7 +55,12 @@ namespace Angelfish
          //    DA.SetDataList(2, gradient.pointsInHull);
             DA.SetDataList(3, gradient.pairings);
             DA.SetDataList(4, gradient.pointsOnEdge);
-            DA.SetDataList(5, gradient.pinHull);
+            List<NurbsCurve> output = new List<NurbsCurve>();
+            for (int i = 0; i < gradient.regionHulls.Count; i++)
+            {
+                output.Add(gradient.regionHulls[i].ToNurbsCurve());
+            }
+            DA.SetDataList("Hulls", output);
         }
 
         /// <summary>

@@ -45,7 +45,19 @@ namespace Angelfish
 
         private double MassPercent()
         {
-            return (double)InPattern.Count / (double)Apoints.Count;
+            int inPattern = 0; 
+
+            if(SolidPattern)
+            {
+                inPattern = Solid.Count;
+            }
+
+            else
+            {
+                inPattern = Void.Count;
+            }
+
+            return (double)inPattern / (double)Apoints.Count;
         }
 
 
@@ -192,7 +204,11 @@ namespace Angelfish
                 else included++;
             }
 
-            return (1.0 / ((double)included - ((double)excluded / (double)InPattern.Count)));
+            int inPattern = 0;
+            if (SolidPattern) inPattern = Solid.Count;
+            else inPattern = Void.Count;
+
+            return (1.0 / ((double)included - ((double)excluded / (double)inPattern)));
         }
 
         private double SolidEdge()

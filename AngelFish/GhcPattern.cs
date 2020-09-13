@@ -47,7 +47,7 @@ namespace Angelfish
             if (solidPattern)
             {
                 List<int> solids = new List<int>(reactDiffuse.Solid);
-                reactDiffuse.InPattern = new List<int>(solids);
+                reactDiffuse.SolidPattern = true; 
 
                 for (int i = 0; i < solids.Count; i++)
                 {
@@ -59,7 +59,7 @@ namespace Angelfish
             else
             {
                 List<int> voids = new List<int>(reactDiffuse.Void);
-                reactDiffuse.InPattern = new List<int>(voids);
+                reactDiffuse.SolidPattern = false; 
 
                 for (int i = 0; i < voids.Count; i++)
                 {

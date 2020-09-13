@@ -17,14 +17,16 @@ namespace Angelfish
         public Point3d min;
         public Point3d max;
 
-        protected bool excludeX;
-        protected bool excludeY;
-        protected bool excludeZ;
+        public bool excludeX;
+        public bool excludeY;
+        public bool excludeZ;
 
         public Mesh mesh;
 
         public Asystem()
         {
+            Apoints = new List<Apoint>();
+            InitAll();
         }
 
         public Asystem(Asystem _asystem)

@@ -63,14 +63,14 @@ namespace Angelfish
             Mesh mesh = null;
             DA.GetData(0, ref mesh);
 
-            List<Pattern> regions = new List<Pattern>();
+            List<Region> regions = new List<Region>();
             Asystem aux = new Asystem();
 
             for (int i = 1; i < Params.Input.Count; i++)
             {
                 if (DA.GetData(i, ref aux))
                 {
-                    regions.Add(new Pattern(aux));
+                    regions.Add(new Region(aux));
                 }
             }
 

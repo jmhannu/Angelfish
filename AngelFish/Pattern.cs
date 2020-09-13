@@ -19,16 +19,14 @@ namespace Angelfish
         private List<double> nextB;
 
         readonly int rdSize;
-        public List<int> InPattern;
 
+        public bool SolidPattern; 
 
         public List<int> Solid;
         public List<int> Void;
 
         public Pattern() : base()
         {
-            Apoints = new List<Apoint>();
-            InitAll();
         }
 
         public Pattern(Pattern _pattern) : base(_pattern)
@@ -41,7 +39,7 @@ namespace Angelfish
             this.rdSize = _pattern.rdSize;
             this.Solid = _pattern.Solid;
             this.Void = _pattern.Void;
-            this.InPattern = _pattern.InPattern;
+            this.SolidPattern = _pattern.SolidPattern;
         }
 
         public Pattern(Asystem _asystem) : base(_asystem)
